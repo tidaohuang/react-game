@@ -1,0 +1,282 @@
+:root {
+    --primary: #25AEF2;
+    --secondary: #4EC9B0;
+    --error: #ff695e;
+    --success: #2ecc40;
+    --warning: #ffc21c;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: Quicksand, sans-serif;
+
+}
+
+html {
+    font-size: 62.5%;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    background-color: rgb(196, 191, 190, .7);
+}
+
+.grid-table {
+    background-color: #fff;
+}
+
+.grid-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.grid {
+    border: .1rem solid black;
+    padding: 1rem;
+
+    position: relative;
+}
+
+.circle {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: #555;
+
+    display: grid;
+    place-items: center;
+}
+
+.circle i {
+    font-size: 2rem;
+    color: #eee;
+}
+
+
+.color-p {
+    background-color: var(--primary);
+}
+
+.color-s {
+    background-color: var(--secondary);
+}
+
+.color-b {
+    background-color: #555;
+}
+
+
+
+button {
+    border: none;
+}
+
+.rotate-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    width: 4rem;
+    height: 4rem;
+    border: transparent;
+    border-radius: 50%;
+
+
+    color: #eee;
+    font-size: 2rem;
+
+    cursor: pointer;
+}
+
+
+
+.rotate-button.primary {
+    background-color: var(--primary);
+}
+
+.rotate-button.secondary {
+    background-color: var(--secondary);
+}
+
+.rotate-button.primary:hover,
+.rotate-button.secondary:hover {
+    background-color: var(--error)
+}
+
+.grid-table.primary+.rotate-button:hover {
+    background-color: var(--primary);
+    cursor: pointer;
+}
+
+.grid-table.secondary+.rotate-button:hover {
+    background-color: var(--secondary);
+    cursor: pointer;
+}
+
+.grid-row:nth-child(2) .grid:nth-child(2),
+.grid-row:nth-child(2) .grid:nth-child(3),
+.grid-row:nth-child(3) .grid:nth-child(2),
+.grid-row:nth-child(3) .grid:nth-child(3) {
+    background-color: #c4bfbe;
+
+}
+
+.grid.success {
+    background-color: var(--error) !important;
+}
+
+/* 
+.circle.active,
+.circle.disable {
+    transition: background-color .5s cubic-bezier(.17, .67, .94, .05);
+} */
+
+
+.circle.blank.color-b:hover {
+    background-color: var(--error);
+    cursor: pointer;
+}
+
+.circle.disable:hover {
+    cursor: not-allowed;
+}
+
+.circle.movable:hover {
+    cursor: pointer;
+    background-color: var(--warning);
+}
+
+/* ball table */
+.ball-table {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    /* width: 100vw; */
+    width: 100%;
+    height: 100%;
+}
+
+.ball-priamary {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20%
+}
+
+.ball-secondary {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20%
+}
+
+.ball-table .ball-priamary .circle,
+.ball-table .ball-secondary .circle {
+    margin-bottom: 1rem;
+}
+
+
+.direction-navbar {
+    width: 15rem;
+    height: 15rem;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0) rotate(-180deg);
+    z-index: -2;
+    /* transform: translate(-50%, -50%); */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+
+    background-color: rgba(200, 200, 200, .9)
+}
+
+
+.direction {
+    position: absolute;
+}
+
+.direction.disable {
+    cursor: not-allowed;
+}
+
+.direction.disable i {
+    font-size: 0;
+}
+
+.direction i {
+    font-size: 2rem;
+    color: #555;
+}
+
+.direction:nth-child(1) {
+    top: 2rem;
+}
+
+.direction:nth-child(2) {
+    top: 6.5rem;
+    right: 2rem;
+}
+
+.direction:nth-child(3) {
+    bottom: 2rem;
+}
+
+.direction:nth-child(4) {
+    top: 6.5rem;
+    left: 2rem;
+}
+
+.direction:nth-child(5) {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: var(--error);
+
+    display: grid;
+    place-items: center;
+}
+
+.direction i:hover {
+    cursor: pointer;
+    color: var(--error);
+    /* color: #fff; */
+}
+
+.direction.center:hover {
+    cursor: pointer;
+}
+
+.direction.center:hover i {
+    color: #fff;
+}
+
+/* navbar show */
+.direction-navbar.show {
+    z-index: 2;
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+}
+
+.direction-navbar {
+    transition: all 0.5s;
+}

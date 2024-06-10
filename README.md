@@ -1,1 +1,1 @@
-# react-game
+# React + TypeScript + Vite
