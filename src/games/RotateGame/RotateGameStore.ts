@@ -1,7 +1,5 @@
 
 import { makeAutoObservable } from "mobx";
-import { store } from "../../stores/store";
-import { MyAlert } from "../../components/MyAlert";
 
 
 type player = 'primary' | 'secondary';
@@ -27,15 +25,7 @@ export interface NavDirectionMap {
     left: cardIndex,
 }
 
-function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export default class RotateGameStore {
-
-
-
-
     currentPlayer: player = 'primary';
     activePrimaryCount = 0;
     activeSecondaryCount = 0;

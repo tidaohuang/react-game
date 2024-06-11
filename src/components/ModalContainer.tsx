@@ -6,6 +6,7 @@ export default observer(function ModalContainer() {
     const { modalStore } = useStore();
 
     return (
+        modalStore.modal.open &&
         <div className={`modal-container ${modalStore.modal.open ? 'open' : ''}`}
             onClick={() => {
                 modalStore.closeModal();
