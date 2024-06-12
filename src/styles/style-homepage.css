@@ -17,13 +17,16 @@
     height: 50rem;
     border-radius: 2.5rem;
     box-shadow: 1rem 1rem 2rem rgba(0, 0, 0, 0.7);
-
     position: relative;
-
     background-color: #fff;
-
     margin-right: 10rem;
+    cursor: pointer;
 
+    text-decoration: none !important;
+}
+
+.game-card:hover {
+    transform: translateY(-5px) scale(1.005) translateZ(0);
 }
 
 
@@ -62,7 +65,7 @@
 }
 
 .tag {
-    background: #FF695E;
+    background: var(--primary);
     color: #fff;
 
     border-radius: 0.3rem;
@@ -78,10 +81,18 @@
     padding: .5rem;
 }
 
+.tag.green {
+    background-color: var(--success);
+}
+
+.tag.dev {
+    background-color: var(--error);
+}
+
 .game-card-meta {
     width: 12rem;
     margin-bottom: 2rem;
-    display:inline-block;
+    display: inline-block;
     font-size: 2rem;
 
 }
