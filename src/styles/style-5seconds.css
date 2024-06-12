@@ -17,8 +17,8 @@
 .question-wrapper {
     color: #fff;
     background-color: rgba(255, 255, 255, .2);
-    width: 160rem;
-    height: 90rem;
+    width: 100rem;
+    height: 50rem;
     border: .5rem solid #fff;
     border-radius: 5rem;
 
@@ -29,34 +29,35 @@
 }
 
 .question-wrapper .question {
-    margin-top: 18rem;
-    font-size: 8rem;
+    margin-top: 10rem;
+    font-size: 6rem;
 }
 
 .question-wrapper .counter {
-    width: 25rem;
-    height: 25rem;
+    width: 10.5rem;
+    height: 10.5rem;
     border-radius: 50%;
     border: .5rem solid #fff;
+    box-sizing: border-box;
 
     display: grid;
     place-items: center;
-    font-size: 15rem;
+    font-size: 6rem;
 
-    margin-bottom: 15rem;
+    margin-bottom: 6rem;
     position: relative;
 }
 
 .question-wrapper .counter::after {
     position: absolute;
     content: '';
-    width: 24rem;
-    height: 24rem;
+    width: 9.5rem;
+    height: 9.5rem;
     -webkit-animation: button-spin 1s linear;
     animation: button-spin 1s linear;
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
-    border-radius: 500rem;
+    border-radius: 400rem;
     border-color: var(--error) transparent transparent;
     border-style: solid;
     border-width: .5rem;
@@ -65,7 +66,7 @@
 
 .question-wrapper .counter-stop {
     padding: 2rem 5rem;
-    font-size: 6rem;
+    font-size: 4rem;
     font-weight: 500;
 
     border-radius: 2rem;
