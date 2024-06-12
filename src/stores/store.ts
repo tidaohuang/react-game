@@ -4,6 +4,7 @@ import ModalStore from "./ModalStore";
 import SlideShowStore from "./SlideShowStore";
 import NavBarStore from "./NavBarStore";
 import FiveSecondsStore from "../games/FiveSecondsGame/FiveSecondsStore";
+import PlayerStore from "./PlayerStore";
 
 
 interface Store {
@@ -12,6 +13,7 @@ interface Store {
     modalStore: ModalStore,
     slideShowStore: SlideShowStore,
     navbarStore: NavBarStore,
+    playerStore: PlayerStore,
 }
 
 export const store: Store = {
@@ -19,7 +21,8 @@ export const store: Store = {
     fiveSecondsStore: new FiveSecondsStore(),
     modalStore: new ModalStore,
     slideShowStore: new SlideShowStore(),
-    navbarStore: new NavBarStore()
+    navbarStore: new NavBarStore(),
+    playerStore: new PlayerStore()
 };
 
 export const StoreContext = createContext(store);

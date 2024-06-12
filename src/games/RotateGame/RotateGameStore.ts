@@ -1,5 +1,6 @@
 
 import { makeAutoObservable } from "mobx";
+import { store } from "../../stores/store";
 
 
 type player = 'primary' | 'secondary';
@@ -401,6 +402,10 @@ export default class RotateGameStore {
                 this.updateSingleGrid(card.gridType, card.gridIndex, { ...tempCard, success: true });
             })
         })
+
+        if (winners.length > 0){
+            store.playerStore.toggleWinner();
+        }
     }
 
     checkOneSuccessByIndex(items: { gridType: gridType, gridIndex: number }[]): { success: boolean, winner: player | undefined, cardIndex: { gridType: gridType, gridIndex: number }[] } {

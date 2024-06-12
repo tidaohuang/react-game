@@ -18,10 +18,7 @@ export default class SlideShowStore {
         open: false,
         images: []
     }
-
     current = 0;
-    playPauseBool = true;
-
     constructor() {
         makeAutoObservable(this);
     }
