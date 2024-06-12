@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './styles/style.css';
 import './styles/style-navbar.css';
+import './styles/style-5seconds.css';
 import './styles/style-homepage.css';
 import './styles/style-modal.css';
 import './styles/style-slideshow.css';

@@ -23,6 +23,9 @@ export default observer(function NvaBarContainer() {
                 <li className="nav-item">
                     <a href="/react-game/rotate" className="nav-link">Rotate 旋轉棋</a>
                 </li>
+                <li className="nav-item">
+                    <a href="/react-game/5seconds" className="nav-link">5 seconds 反應力</a>
+                </li>
             </ul>
         </nav>
     )
