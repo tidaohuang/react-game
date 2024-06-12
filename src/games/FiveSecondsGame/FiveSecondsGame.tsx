@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default observer(function FiveSecondsGame() {
 
-    const { fiveSecondsStore } = useStore();
+    const { fiveSecondsStore, slideShowStore } = useStore();
 
     const question = fiveSecondsStore.getCurrentQuestion();
 
@@ -24,6 +24,12 @@ export default observer(function FiveSecondsGame() {
 
     return (
         <div className="container five-seconds">
+            <div className="info" onClick={() => slideShowStore.toggleSlideShow([
+                "games/fiveSeconds/1.JPG",
+                "games/fiveSeconds/2.JPG",
+            ])}>
+                <i className="fa-solid fa-circle-info"></i>
+            </div>
             <div className="question-wrapper">
                 <div className={`question ${loading ? 'active' : ''}`}>{question}</div>
                 <FiveSecondsCounter handleClick={() => {

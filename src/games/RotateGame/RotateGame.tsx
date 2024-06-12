@@ -30,12 +30,12 @@ export default observer(function RotateGame() {
     return (
         <div className="container">
             <div className="info" onClick={() => slideShowStore.toggleSlideShow([
-                "games/rotate-game-1.JPG",
-                "games/rotate-game-2.JPG",
-                "games/rotate-game-3.JPG",
-                "games/rotate-game-4.JPG",
-                "games/rotate-game-5.JPG",
-                "games/rotate-game-6.JPG",
+                "games/rotate/1.JPG",
+                "games/rotate/2.JPG",
+                "games/rotate/3.JPG",
+                "games/rotate/4.JPG",
+                "games/rotate/5.JPG",
+                "games/rotate/6.JPG",
             ])}>
                 <i className="fa-solid fa-circle-info"></i>
             </div>
