@@ -1,9 +1,10 @@
 import { observer } from "mobx-react-lite"
 import { useStore } from "../stores/store"
+import { PAGE } from "../stores/NavBarStore";
 
 
 
-export default observer(function NvaBarContainer() {
+export default observer(function NavBarContainer() {
 
     const { navbarStore } = useStore();
 
@@ -17,13 +18,13 @@ export default observer(function NvaBarContainer() {
 
             <ul className="nav-list">
                 <li className="nav-item">
-                    <a href="/react-game/" className="nav-link">Home</a>
+                    <a href={navbarStore.getUrl(PAGE.Home)} className="nav-link">Home</a>
                 </li>
                 <li className="nav-item">
-                    <a href="/react-game/rotate" className="nav-link">旋轉棋</a>
+                    <a href={navbarStore.getUrl(PAGE.Rotate)} className="nav-link">旋轉棋</a>
                 </li>
                 <li className="nav-item">
-                    <a href="/react-game/5seconds" className="nav-link">5秒反應</a>
+                    <a href={navbarStore.getUrl(PAGE.FiveSeconds)} className="nav-link">5秒反應</a>
                 </li>
             </ul>
         </nav>

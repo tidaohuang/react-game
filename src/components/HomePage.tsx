@@ -1,16 +1,17 @@
+import { PAGE } from "../stores/NavBarStore";
+import { useStore } from "../stores/store"
 
-// import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
 
-    // let navigate = useNavigate();
+    const { navbarStore } = useStore();
 
 
     return (
         <div className="container home">
 
             <div className="game-card-wrapper">
-                <div className="game-card" onClick={() => window.location.href = "/react-game/rotate"}>
+                <div className="game-card" onClick={() => window.location.href = navbarStore.getUrl(PAGE.Rotate)}>
                     <div className="game-card-top">
                         <img src="rotate-game-logo.svg" className="game-card-logo" />
                     </div>
@@ -49,7 +50,7 @@ export default function HomePage() {
 
                     </div>
                 </div>
-                <div className="game-card" onClick={() => window.location.href = "/react-game/5seconds"}>
+                <div className="game-card" onClick={() => window.location.href = navbarStore.getUrl(PAGE.FiveSeconds)}>
                     <div className="game-card-top">
                         <img src="five-seconds-game-logo.svg" className="game-card-logo five-seconds" />
                     </div>
@@ -87,7 +88,7 @@ export default function HomePage() {
 
                     </div>
                 </div>
-                <div className="game-card" onClick={() => window.location.href = "/react-game/"}>
+                <div className="game-card" onClick={() => alert('開發中')}>
                     <div className="game-card-top">
                         {/* <img src="rotate-game-logo.svg" className="game-card-logo" /> */}
                     </div>

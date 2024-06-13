@@ -1,6 +1,13 @@
 import { makeAutoObservable } from "mobx"
 
 
+export enum PAGE {
+    Home = '',
+    Rotate = 'rotate',
+    FiveSeconds = '5seconds'
+}
+
+
 
 export default class NavBarStore {
 
@@ -12,5 +19,9 @@ export default class NavBarStore {
 
     toggle = () => {
         this.show = !this.show;
+    }
+
+    getUrl(page: PAGE): string {
+        return `/react-game/?g=${page}`;
     }
 }

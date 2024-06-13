@@ -8,13 +8,12 @@ import './styles/style-homepage.css';
 import './styles/style-modal.css';
 import './styles/style-slideshow.css';
 import { StoreContext, store } from './stores/store.ts';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './router/Router.tsx'
+import App from './App.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <StoreContext.Provider value={store}>
-      <RouterProvider router={router} />
+      <App />
     </StoreContext.Provider>
   </React.StrictMode>,
 )
