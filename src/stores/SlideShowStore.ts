@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { store } from "./store";
 
 
 interface Image {
@@ -11,6 +12,9 @@ interface SlideShow {
     open: boolean;
     images: Image[];
 }
+
+
+
 
 export default class SlideShowStore {
 
@@ -43,18 +47,22 @@ export default class SlideShowStore {
                 return { url, visible: true };
             }
             return { url, visible: false };
-        })
+        });
+
+        document.addEventListener("keydown", keyDownHandler);
     }
+
+
+
 
     closeSlideShow = () => {
         this.slide.open = false;
         this.slide.images = [];
+
+        document.removeEventListener("keydown", keyDownHandler);
     }
 
     changeSlides = () => {
-
-        console.log('changeSlides ...')
-
         if (this.current > this.slide.images.length - 1) {
             this.current = 0;
         } else if (this.current < 0) {
@@ -75,7 +83,6 @@ export default class SlideShowStore {
 
     showNextSlide = () => {
         this.current++;
-        console.log(JSON.stringify(this.current))
         this.changeSlides();
     }
 
@@ -85,3 +92,14 @@ export default class SlideShowStore {
     }
 }
 
+
+const keyDownHandler = (e: globalThis.KeyboardEvent) => {
+    e.preventDefault();
+    if (e.key === "Escape") {
+        store.slideShowStore.closeSlideShow();
+    } else if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === "Enter") {
+        store.slideShowStore.showNextSlide();
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        store.slideShowStore.showPreviousSlide();
+    } 
+}
