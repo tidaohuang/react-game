@@ -74,6 +74,23 @@
     margin-bottom: 8rem;
 }
 
+.question-wrapper .start-btn {
+    padding: 2rem 5rem;
+    font-size: 4rem;
+    font-weight: 500;
+    border-radius: 2rem;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.question-wrapper .start-btn:hover{
+    background-color: var(--primary);
+    color: #fff;
+}
+
 .question-wrapper .counter-stop:hover {
     background-color: var(--error);
     color: #fff;

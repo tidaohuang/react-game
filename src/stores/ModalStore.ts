@@ -1,4 +1,6 @@
 import { makeAutoObservable } from "mobx"
+import { store } from "./store";
+import { KeyboardEventKey } from "../constants/KeyboardEvent";
 
 
 interface Modal {
@@ -16,13 +18,22 @@ export default class ModalStore {
         makeAutoObservable(this);
     }
 
-    openModal = (content: JSX.Element) =>{
+    openModal = (content: JSX.Element) => {
         this.modal.open = true;
-        this.modal.body = content
+        this.modal.body = content;
+        document.addEventListener("keydown", keyDownHandler);
     }
 
-    closeModal = () =>{
+    closeModal = () => {
         this.modal.open = false;
         this.modal.body = null;
+        document.removeEventListener("keydown", keyDownHandler);
+    }
+}
+
+const keyDownHandler = (e: globalThis.KeyboardEvent) => {
+    e.preventDefault();
+    if (e.key === KeyboardEventKey.ESCAPE) {
+        store.modalStore.closeModal();
     }
 }

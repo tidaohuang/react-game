@@ -31,11 +31,18 @@ export default observer(function FiveSecondsGame() {
                 <i className="fa-solid fa-circle-info"></i>
             </div>
             <div className="question-wrapper">
-                <div className={`question ${loading ? 'active' : ''}`}>{question}</div>
-                <FiveSecondsCounter handleClick={() => {
-                    fiveSecondsStore.nextQuestion();
-                    setLoading(true);
-                }} />
+                {!fiveSecondsStore.started &&
+                    <button className="start-btn" onClick={()=>{fiveSecondsStore.startGame()}}>開始</button>
+                }
+                {fiveSecondsStore.started &&
+                    <>
+                        <div className={`question ${loading ? 'active' : ''}`}>{question}</div>
+                        <FiveSecondsCounter handleClick={() => {
+                            fiveSecondsStore.nextQuestion();
+                            setLoading(true);
+                        }} />
+                    </>
+                }
             </div>
         </div>
     )

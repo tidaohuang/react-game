@@ -20,7 +20,7 @@ export default function FiveSecondsCounter(props: Props) {
 
     return (
         count >= 0 ? <div className="counter">{count}</div> :
-            <button className="counter-stop" onClick={() => {
+            <button className="counter-stop" id="five-seconds-next-btn" onClick={() => {
                 props.handleClick();
                 setCount(5);
             }}>下一題</button>

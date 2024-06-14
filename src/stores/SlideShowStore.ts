@@ -1,5 +1,7 @@
 import { makeAutoObservable } from "mobx"
 import { store } from "./store";
+import { KeyboardEventKey } from "../constants/KeyboardEvent";
+import { isOneOf } from "../utils/commonFunction";
 
 
 interface Image {
@@ -95,11 +97,16 @@ export default class SlideShowStore {
 
 const keyDownHandler = (e: globalThis.KeyboardEvent) => {
     e.preventDefault();
-    if (e.key === "Escape") {
+    if (e.key === KeyboardEventKey.ESCAPE) {
         store.slideShowStore.closeSlideShow();
-    } else if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === "Enter") {
+    } else if (isOneOf(e.key, 
+        KeyboardEventKey.ARROW_DOWN, 
+        KeyboardEventKey.ARROW_RIGHT, 
+        KeyboardEventKey.ENTER)) {
         store.slideShowStore.showNextSlide();
-    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+    } else if (isOneOf(e.key, 
+        KeyboardEventKey.ARROW_LEFT, 
+        KeyboardEventKey.ARROW_UP)) {
         store.slideShowStore.showPreviousSlide();
-    } 
+    }
 }

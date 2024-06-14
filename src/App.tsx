@@ -8,6 +8,7 @@ import WinnerContainer from "./components/WinnerContainer";
 import { PAGE } from "./stores/NavBarStore";
 import RotateGame from "./games/RotateGame/RotateGame";
 import FiveSecondsGame from "./games/FiveSecondsGame/FiveSecondsGame";
+import { fiveSecondsGameKeyDownHandler } from "./games/FiveSecondsGame/FiveSecondsStore";
 
 function App() {
 	const parsed = queryString.parse(window.location.search);
@@ -19,6 +20,7 @@ function App() {
 	if (game === PAGE.Rotate) {
 		content.push(<RotateGame key={PAGE.Rotate} />)
 	} else if (game === PAGE.FiveSeconds) {
+		document.addEventListener("keydown", fiveSecondsGameKeyDownHandler);
 		content.push(<FiveSecondsGame key={PAGE.FiveSeconds} />)
 	} else {
 		content.push(<HomePage key={PAGE.Home} />)
