@@ -23,6 +23,9 @@ export default class FiveSecondsStore {
 
     startGame() {
         this.started = true;
+
+        // add event listener
+        document.addEventListener("keydown", fiveSecondsGameKeyDownHandler);
     }
 
     getCurrentQuestion(): string {
