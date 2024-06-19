@@ -1,7 +1,8 @@
 
 import { makeAutoObservable, runInAction } from "mobx";
-import { questionPools, shuffle } from "./FiveSecondsQuestionPools";
+import { questionPools } from "./FiveSecondsQuestionPools";
 import { KeyboardEventKey } from "../../constants/KeyboardEvent";
+import { generateRandomGameId, shuffle } from "../../utils/commonFunction";
 
 
 
@@ -17,8 +18,9 @@ export default class FiveSecondsStore {
 
     constructor() {
         makeAutoObservable(this);
-        this.questionPools = shuffle(questionPools);
+        this.questionPools = shuffle(questionPools, generateRandomGameId());
 
+        document.addEventListener("keydown", slideShowShortCutKeyDown);
     }
 
     startGame() {
@@ -26,6 +28,9 @@ export default class FiveSecondsStore {
 
         // add event listener
         document.addEventListener("keydown", fiveSecondsGameKeyDownHandler);
+
+        // remove slideshow listener
+        document.removeEventListener("keydown", slideShowShortCutKeyDown);
     }
 
     getCurrentQuestion(): string {
@@ -54,3 +59,11 @@ export const fiveSecondsGameKeyDownHandler = (e: globalThis.KeyboardEvent) => {
         document.getElementById("five-seconds-next-btn")?.click();
     }
 }
+
+export const slideShowShortCutKeyDown = (e: globalThis.KeyboardEvent) => {
+    e.preventDefault();
+    if (e.key === 'i') {
+        document.getElementById("info")?.click();
+    }
+}
+

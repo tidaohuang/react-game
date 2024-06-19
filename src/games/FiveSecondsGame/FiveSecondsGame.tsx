@@ -24,7 +24,7 @@ export default observer(function FiveSecondsGame() {
 
     return (
         <div className="container five-seconds">
-            <div className="info" onClick={() => slideShowStore.toggleSlideShow([
+            <div className="info" id="info" onClick={() => slideShowStore.toggleSlideShow([
                 "games/fiveSeconds/1.JPG",
                 "games/fiveSeconds/2.JPG",
             ])}>
