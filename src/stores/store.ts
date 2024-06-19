@@ -5,11 +5,14 @@ import SlideShowStore from "./SlideShowStore";
 import NavBarStore from "./NavBarStore";
 import FiveSecondsStore from "../games/FiveSecondsGame/FiveSecondsStore";
 import PlayerStore from "./PlayerStore";
+import BombGameStore from "../games/BombGame/BombGameStore";
 
 
 interface Store {
     rotateGameStore: RotateGameStore,
     fiveSecondsStore: FiveSecondsStore,
+    bombStore: BombGameStore,
+
     modalStore: ModalStore,
     slideShowStore: SlideShowStore,
     navbarStore: NavBarStore,
@@ -19,6 +22,8 @@ interface Store {
 export const store: Store = {
     rotateGameStore: new RotateGameStore(),
     fiveSecondsStore: new FiveSecondsStore(),
+    bombStore: new BombGameStore(),
+
     modalStore: new ModalStore,
     slideShowStore: new SlideShowStore(),
     navbarStore: new NavBarStore(),

@@ -1,0 +1,55 @@
+.brick {
+    width: 5rem;
+    height: 2rem;
+    background-color: yellow;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.area {
+    width: 10rem;
+    height: 5rem;
+    background-color: green;
+
+    position: relative;
+}
+
+.ship-container {
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+    width: 30rem;
+    height: 80vh;
+}
+
+.ship {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ship-3 {
+    width: calc(80vh / 5 * (3 - 0.5));
+}
+
+.grid-container {
+
+    width: 80vh;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    grid-gap: 1rem;
+
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    font-size: 30px;
+    text-align: center;
+}
+
+/* .grid-item:hover {
+    background-color: var(--primary);
+} */

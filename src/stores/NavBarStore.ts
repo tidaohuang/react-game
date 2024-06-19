@@ -4,7 +4,9 @@ import { makeAutoObservable } from "mobx"
 export enum PAGE {
     Home = '',
     Rotate = 'rotate',
-    FiveSeconds = '5seconds'
+    FiveSeconds = '5seconds',
+    Bomb = 'bomb',
+    Test = 'test'
 }
 
 

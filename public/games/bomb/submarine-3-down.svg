@@ -1,0 +1,13 @@
+<svg width="41" height="128" viewBox="0 0 41 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M41 13L41 7L18.5 10L24 22L41 13Z" fill="#2F4859"/>
+<path d="M41 3L41 7L18.5 13.5L18 5.5L41 3Z" fill="#D9D9D9"/>
+<path d="M7.15493e-08 13L0 7L22.5 10L17 22L7.15493e-08 13Z" fill="#2F4859"/>
+<path d="M0 3L4.76995e-08 7L22.5 13.5L23 5.5L0 3Z" fill="#D9D9D9"/>
+<rect x="32" y="30" width="69" height="25" transform="rotate(90 32 30)" fill="#64798A"/>
+<ellipse cx="19.5" cy="31.5" rx="31.5" ry="12.5" transform="rotate(90 19.5 31.5)" fill="#64798A"/>
+<ellipse cx="19.5" cy="96.5" rx="31.5" ry="12.5" transform="rotate(90 19.5 96.5)" fill="#64798A"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19 0C12.5259 0.641787 7.31685 13.692 7.01392 29.9753L7 29.9753L7 31.4753L7 96.4753L7 98.9753L7.03879 98.9753C7.53154 114.79 12.659 127.322 19 127.951L19 0Z" fill="#3A556A"/>
+<ellipse cx="6.5" cy="19" rx="6.5" ry="19" transform="matrix(1 0 0 -1 12 107)" fill="#2F4859"/>
+<ellipse cx="3.76316" cy="11" rx="3.76316" ry="11" transform="matrix(1 0 0 -1 15 99)" fill="#64798A"/>
+<rect width="3" height="8" rx="1.5" transform="matrix(1 0 0 -1 17 92)" fill="#D9D9D9"/>
+</svg>
