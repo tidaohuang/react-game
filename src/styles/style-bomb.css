@@ -1,4 +1,4 @@
-.brick {
+/* .brick {
     width: 5rem;
     height: 2rem;
     background-color: yellow;
@@ -13,13 +13,13 @@
     background-color: green;
 
     position: relative;
-}
+} */
 
 .ship-container {
     position: absolute;
     top: 5rem;
     left: 5rem;
-    width: 30rem;
+    width: 5rem;
     height: 80vh;
 }
 
@@ -27,6 +27,8 @@
     position: absolute;
     top: 0;
     left: 0;
+
+    border: solid 1px black;
 }
 
 .ship-3 {
@@ -48,6 +50,10 @@
     padding: 2rem;
     font-size: 30px;
     text-align: center;
+}
+
+.grid-item.active {
+    background-color: var(--primary);
 }
 
 /* .grid-item:hover {

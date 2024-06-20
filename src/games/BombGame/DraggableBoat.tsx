@@ -6,11 +6,11 @@ import { useStore } from "../../stores/store";
 
 
 interface Props {
+    id: number,
     boat: Boat,
-    // onDragStart: (e: React.DragEvent<HTMLDivElement>) => void
 }
 
-export default observer(function Boat(props: Props) {
+export default observer(function DraggableBoat(props: Props) {
 
     const { bombStore } = useStore();
 
@@ -19,8 +19,7 @@ export default observer(function Boat(props: Props) {
             className={`ship ship-${props.boat.size}`}
             src={`./games/bomb/submarine-${props.boat.size}-${props.boat.direction}.svg`}
             style={{ top: props.boat.position.y, left: props.boat.position.x }}
-            onDragStart={(e: React.DragEvent<HTMLDivElement>) => bombStore.handleDragStart(e)}
-            // onDragStart={(e: React.DragEvent<HTMLDivElement>) => props.onDragStart(e)}
+            onDragStart={(e: React.DragEvent<HTMLDivElement>) => bombStore.handleDragStart(e, props.id)}
             draggable={true}
         ></img>
     )
