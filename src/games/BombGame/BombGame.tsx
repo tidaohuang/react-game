@@ -8,39 +8,39 @@ export default observer(function BombGame() {
     const { bombStore } = useStore();
 
 
-    let start: { x: number, y: number } = { x: 0, y: 0 }
-    let delta: { x: number, y: number } = { x: 0, y: 0 }
-    function handleDragStart(e: React.DragEvent<HTMLDivElement>): void {
-        if (e.target) {
-            e.dataTransfer.setData("text", (e.target as Element).id);
-            start = { x: e.clientX, y: e.clientY }
-        }
-    }
+    // let start: { x: number, y: number } = { x: 0, y: 0 }
+    // let delta: { x: number, y: number } = { x: 0, y: 0 }
+    // function handleDragStart(e: React.DragEvent<HTMLDivElement>): void {
+    //     if (e.target) {
+    //         e.dataTransfer.setData("text", (e.target as Element).id);
+    //         start = { x: e.clientX, y: e.clientY }
+    //     }
+    // }
 
-    function drop(ev: React.DragEvent<HTMLDivElement>): void {
-        console.log('drop ...')
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        var node = document.getElementById(data);
-        if (node) {
-            delta = { x: ev.clientX - start.x, y: ev.clientY - start.y };
-            // console.log('delta: ' + JSON.stringify(delta));
+    // function drop(ev: React.DragEvent<HTMLDivElement>): void {
+    //     console.log('drop ...')
+    //     ev.preventDefault();
+    //     var data = ev.dataTransfer.getData("text");
+    //     var node = document.getElementById(data);
+    //     if (node) {
+    //         delta = { x: ev.clientX - start.x, y: ev.clientY - start.y };
+    //         // console.log('delta: ' + JSON.stringify(delta));
 
-            let shiftX = getPxToNumber(node.style.left) + delta.x;
-            let shiftY = getPxToNumber(node.style.top) + delta.y;
-            // console.log('position: ' + JSON.stringify({ x: shiftX, y: shiftY }));
+    //         let shiftX = getPxToNumber(node.style.left) + delta.x;
+    //         let shiftY = getPxToNumber(node.style.top) + delta.y;
+    //         // console.log('position: ' + JSON.stringify({ x: shiftX, y: shiftY }));
 
-            node.style.left = shiftX + 'px';
-            node.style.top = shiftY + 'px';
-        }
-    }
+    //         node.style.left = shiftX + 'px';
+    //         node.style.top = shiftY + 'px';
+    //     }
+    // }
 
-    function getPxToNumber(px: string): number {
-        if (px) {
-            return parseInt(px.replace('px', ''));
-        }
-        return 0;
-    }
+    // function getPxToNumber(px: string): number {
+    //     if (px) {
+    //         return parseInt(px.replace('px', ''));
+    //     }
+    //     return 0;
+    // }
 
 
     function allowDrop(ev: React.DragEvent<HTMLDivElement>): void {
@@ -58,10 +58,11 @@ export default observer(function BombGame() {
 
                 <Boat
                     boat={bombStore.intialBoat}
-                    onDragStart={bombStore.handleDragStart} />
+                    // onDragStart={bombStore.handleDragStart}
+                />
             </div>
             <div className="grid-container" id="grid"
-                onDrop={drop}
+                onDrop={(e: React.DragEvent<HTMLDivElement>) => bombStore.drop(e)}
                 onDragOver={allowDrop}>
 
                 <div className="grid-item">(0, 0)</div>
