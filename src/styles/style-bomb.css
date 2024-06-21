@@ -1,24 +1,12 @@
-/* .brick {
-    width: 5rem;
-    height: 2rem;
-    background-color: yellow;
-    position: absolute;
-    top: 0;
-    left: 0;
+
+.container.bomb {
+    background-color: #01263d;
 }
-
-.area {
-    width: 10rem;
-    height: 5rem;
-    background-color: green;
-
-    position: relative;
-} */
 
 .ship-container {
     position: absolute;
-    top: 5rem;
-    left: 5rem;
+    top: 3rem;
+    left: 3rem;
     width: 5rem;
     height: 80vh;
 }
@@ -28,21 +16,38 @@
     top: 0;
     left: 0;
 
-    border: solid 1px black;
+    cursor: pointer;
+
+    /* border: solid 1px black; */
 }
 
-.ship-3 {
+.ship-3-left,
+.ship-3-right {
     width: calc(80vh / 5 * (3 - 0.5));
 }
 
-.grid-container {
+.ship-3-up,
+.ship-3-down {
+    height: calc(80vh / 5 * (3 - 0.5));
+}
 
+.ship-2-left,
+.ship-2-right {
+    width: calc(80vh / 5 * (2 - 0.5));
+}
+
+.ship-2-up,
+.ship-2-down {
+    height: calc(80vh / 5 * (2 - 0.5));
+}
+
+
+.grid-container {
     width: 80vh;
     height: 80vh;
     display: grid;
     grid-template-columns: repeat(5, auto);
     grid-gap: 1rem;
-
 }
 
 .grid-item {
@@ -52,10 +57,89 @@
     text-align: center;
 }
 
-.grid-item.active {
+.container.bomb.primary .grid-item.active {
     background-color: var(--primary);
 }
 
-/* .grid-item:hover {
+.container.bomb.secondary .grid-item.active {
+    background-color: var(--secondary);
+}
+
+.bomb-ready-btn {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+
+    padding: 1.5rem;
+
+    font-size: 3rem;
+    color: #fff;
+
+    border: .3rem solid;
+    border-radius: .5rem;
+
+    cursor: pointer;
+}
+
+.container.bomb.primary .bomb-ready-btn {
+    border-color: var(--primary);
     background-color: var(--primary);
-} */
+}
+
+.container.bomb.secondary .bomb-ready-btn {
+    border-color: var(--secondary);
+    background-color: var(--secondary);
+}
+
+.container.bomb.primary .bomb-ready-btn:hover{
+    color: var(--primary);
+    background-color: #fff;
+
+    border-color: var(--primary);
+}
+
+.container.bomb.secondary .bomb-ready-btn:hover{
+    color: var(--secondary);
+    background-color: #fff;
+
+    border-color: var(--secondary);
+}
+
+
+/* dashboard - start */
+
+.container.bomb-dashboard .dashboard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container.bomb-dashboard .grid-container {
+    width: 60vh;
+    height: 60vh;
+
+    margin-left: 10rem;
+}
+
+.container.bomb-dashboard .grid-container .grid-item.blank:hover {
+    background-color: var(--error);
+    cursor: pointer;
+    
+}
+
+.grid-container.primary .grid-item.bombed,
+.grid-container.primary .grid-item.missed {
+    padding: 0;
+    display: grid;
+    place-items: center;
+
+    cursor: not-allowed;
+}
+
+.grid-container.primary .grid-item.bombed i,
+.grid-container.primary .grid-item.missed i {
+    width: 100%;
+}
+
+/* dashboard - end */

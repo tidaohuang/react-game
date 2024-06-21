@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx";
 import { store } from "../../stores/store";
 
 
-type player = 'primary' | 'secondary';
+export type player = 'primary' | 'secondary';
 export type ColroStatus = 'p' | 's' | 'b'
 export type GridStatus = 'active' | 'disable' | 'blank' | 'movable';
 export type gridType = 'outer' | 'inner';

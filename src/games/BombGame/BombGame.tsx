@@ -2,11 +2,18 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import { Boat } from "./BombGameStore";
 import DraggableBoat from "./DraggableBoat";
+import BombGameDashboard from "./BombGameDashboard";
 
 
 export default observer(function BombGame() {
 
     const { bombStore } = useStore();
+
+    if (bombStore.currentPlayer === 'bomb') {
+        return (
+            <BombGameDashboard />
+        )
+    }
 
 
     function allowDrop(ev: React.DragEvent<HTMLDivElement>): void {
@@ -14,7 +21,7 @@ export default observer(function BombGame() {
     }
 
     return (
-        <div className="container bomb">
+        <div className={`container bomb ${bombStore.currentPlayer}`}>
             <div className="ship-container">
                 {bombStore.boats.map((boat: Boat, index: number) => (
                     <DraggableBoat key={index} id={index} boat={boat} />
@@ -25,9 +32,7 @@ export default observer(function BombGame() {
                 onDrop={(e: React.DragEvent<HTMLDivElement>) => {
                     bombStore.drop(e);
                 }}
-                // onDragOver={(e: React.DragEvent<HTMLDivElement>) => bombStore.allowDrop(e)}
                 onDragOver={allowDrop}
-
             >
 
                 <div className="grid-item" id="grid0">(0, 0)</div>
@@ -60,6 +65,21 @@ export default observer(function BombGame() {
                 <div className="grid-item" id="grid23">(4, 3)</div>
                 <div className="grid-item" id="grid24">(4, 4)</div>
             </div>
+
+
+            {bombStore.isPrimaryPlayer() && bombStore.player1Ready &&
+                <div className="bomb-ready-btn" onClick={() => bombStore.saveBoatsToLocalStorage()}>
+                    完成配置
+                </div>
+            }
+
+            {!bombStore.isPrimaryPlayer() && bombStore.player2Ready &&
+                <div className="bomb-ready-btn" onClick={() => bombStore.saveBoatsToLocalStorage()}>
+                    完成配置
+                </div>
+            }
+
+
 
         </div>
     )
