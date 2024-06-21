@@ -128,8 +128,8 @@
     
 }
 
-.grid-container.primary .grid-item.bombed,
-.grid-container.primary .grid-item.missed {
+.grid-container .grid-item.bombed,
+.grid-container .grid-item.missed {
     padding: 0;
     display: grid;
     place-items: center;
@@ -137,8 +137,8 @@
     cursor: not-allowed;
 }
 
-.grid-container.primary .grid-item.bombed i,
-.grid-container.primary .grid-item.missed i {
+.grid-container .grid-item.bombed i,
+.grid-container .grid-item.missed i {
     width: 100%;
 }
 
