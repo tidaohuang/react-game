@@ -31,7 +31,7 @@ export default observer(function BombGameGrid(props: Props) {
 
     return (
         <div className={`grid-item ${props.bomb.status}`}
-            onClick={() => bombStore.bomb(props.player, props.bomb.index)}
+            onClick={() => bombStore.setBomb(props.player, props.bomb.index)}
         >
             {props.bomb.status === 'bombed' && <i className="fa-solid fa-bomb"></i>}
             {props.bomb.status === 'missed' && <i className="fa-solid fa-xmark"></i>}

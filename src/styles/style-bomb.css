@@ -1,4 +1,3 @@
-
 .container.bomb {
     background-color: #01263d;
 }
@@ -17,28 +16,28 @@
     left: 0;
 
     cursor: pointer;
-
-    /* border: solid 1px black; */
+    /* border: 3px solid yellow; */
 }
 
 .ship-3-left,
 .ship-3-right {
-    width: calc(80vh / 5 * (3 - 0.5));
+    width: calc(80vh / 5 * (3 - .8));
 }
 
 .ship-3-up,
 .ship-3-down {
-    height: calc(80vh / 5 * (3 - 0.5));
+    height: calc(80vh / 5 * (3 - .8));
+    /* transform: rotate(90deg); */
 }
 
 .ship-2-left,
 .ship-2-right {
-    width: calc(80vh / 5 * (2 - 0.5));
+    width: calc(80vh / 5 * (2 - .8));
 }
 
 .ship-2-up,
 .ship-2-down {
-    height: calc(80vh / 5 * (2 - 0.5));
+    height: calc(80vh / 5 * (2 - .8));
 }
 
 
@@ -91,14 +90,14 @@
     background-color: var(--secondary);
 }
 
-.container.bomb.primary .bomb-ready-btn:hover{
+.container.bomb.primary .bomb-ready-btn:hover {
     color: var(--primary);
     background-color: #fff;
 
     border-color: var(--primary);
 }
 
-.container.bomb.secondary .bomb-ready-btn:hover{
+.container.bomb.secondary .bomb-ready-btn:hover {
     color: var(--secondary);
     background-color: #fff;
 
@@ -108,7 +107,7 @@
 
 /* dashboard - start */
 
-.container.bomb-dashboard .dashboard{
+.container.bomb-dashboard .dashboard {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -125,7 +124,11 @@
 .container.bomb-dashboard .grid-container .grid-item.blank:hover {
     background-color: var(--error);
     cursor: pointer;
-    
+
+}
+
+.grid-container .grid-item.set {
+    background-color: var(--error);
 }
 
 .grid-container .grid-item.bombed,
@@ -141,5 +144,74 @@
 .grid-container .grid-item.missed i {
     width: 100%;
 }
+
+
+.bomb-trigger-btn {
+    position: absolute;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    top: 90%;
+    transform: translateY(-50%);
+}
+
+
+.bomb-btn-pushable {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.bomb-btn-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    transform: translateY(2px);
+}
+
+.bomb-btn-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+}
+
+.bomb-btn-front {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 2rem;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    transform: translateY(-4px);
+}
+
+
+/* hover effect */
+.bomb-btn-pushable:hover .bomb-btn-front {
+    transform: translateY(-5px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.bomb-btn-pushable:hover .bomb-btn-shadow {
+    transform: translateY(3px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
 
 /* dashboard - end */

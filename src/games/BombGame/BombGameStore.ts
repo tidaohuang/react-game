@@ -25,7 +25,7 @@ export interface Boat {
 
 export interface Bomb {
     index: number,
-    status: 'bombed' | 'missed' | 'blank'
+    status: 'bombed' | 'missed' | 'blank' | 'set'
     cssGridArea?: CssGridArea | 'hidden'
     crashedBoat?: Boat
 }
@@ -48,18 +48,23 @@ export interface BoatDashboard {
 
 export default class BombGameStore {
 
+
     dashboard: BoatDashboard = {
         attackPrimaryBombs: [],
         attackSecondaryBombs: [],
         primaryBoats: this.getBoatsFromLocalStorage('primary'),
         secondaryBoats: this.getBoatsFromLocalStorage('secondary')
+        // primaryBoats: [],
+        // secondaryBoats: []
     }
 
+    tempBombs: { primaryIndex?: number, secondaryIndex?: number } = {}
+
     initialBoats: Boat[] = [
-        { position: { x: 0, y: 0 }, direction: 'left', size: 3, gridsTaken: [] },
         { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [] },
-        { position: { x: 0, y: 0 }, direction: 'up', size: 2, gridsTaken: [] },
-        { position: { x: 0, y: 0 }, direction: 'up', size: 2, gridsTaken: [] },
+        { position: { x: 0, y: 200 }, direction: 'right', size: 3, gridsTaken: [] },
+        { position: { x: 0, y: 400 }, direction: 'right', size: 2, gridsTaken: [] },
+        { position: { x: 0, y: 600 }, direction: 'right', size: 2, gridsTaken: [] },
     ]
 
     boats: Boat[] = this.initialBoats;
@@ -104,10 +109,49 @@ export default class BombGameStore {
         return this.dashboard.attackSecondaryBombs[index];
     }
 
+    setBomb(player: player, index: number): void {
+
+        // clear privous selection to blank
+        if (this.tempBombs.primaryIndex !== undefined && player === 'primary') {
+            let targetBomb = this.getTargetBomb(player, this.tempBombs.primaryIndex);
+            targetBomb.status = 'blank';
+            this.updateBomb(player, this.tempBombs.primaryIndex, targetBomb);
+        }
+        if (this.tempBombs.secondaryIndex !== undefined && player === 'secondary') {
+            let targetBomb = this.getTargetBomb(player, this.tempBombs.secondaryIndex);
+            targetBomb.status = 'blank';
+            this.updateBomb(player, this.tempBombs.secondaryIndex, targetBomb);
+        }
+
+        // make new one to status set
+        if (player === 'primary') {
+            this.tempBombs.primaryIndex = index;
+        } else {
+            this.tempBombs.secondaryIndex = index;
+        }
+
+        let targetBomb = this.getTargetBomb(player, index);
+        targetBomb.status = 'set';
+        this.updateBomb(player, index, targetBomb);
+    }
+
+    triggerBomb(): void {
+        this.bomb('primary', this.tempBombs.primaryIndex!);
+        this.bomb('secondary', this.tempBombs.secondaryIndex!);
+
+        this.tempBombs = {};
+    }
+
     bomb(player: player, index: number): void {
 
         // set bomb
         const target: Bomb = this.getTargetBomb(player, index);
+        if (target === undefined) {
+            throw new Error(`Bomb (playe: ${player}, index: ${index}) not found`);
+        }
+        // console.log(JSON.stringify({ player, index }));
+        // console.log(JSON.stringify(target));
+
         target.status = this.targetBombed(player, index) ? 'bombed' : 'missed';
         this.updateBomb(player, index, target);
 
@@ -119,7 +163,7 @@ export default class BombGameStore {
 
         const targetBoat: Boat = this.getTargetBoat(player, newlyCrashedBoatIndex);
         targetBoat.status = 'crashed';
-        this.updateBoat(player, index, targetBoat);
+        this.updateBoat(player, newlyCrashedBoatIndex, targetBoat);
 
         // starting grid css: grid-area calculation: CssGridArea
         const startingGridIndex = this.convertGridIdToIndex(targetBoat.gridsTaken[0]);
@@ -135,51 +179,6 @@ export default class BombGameStore {
             let targetBomb = this.getTargetBomb(player, gridIndex);
             targetBomb.cssGridArea = 'hidden';
             this.updateBomb(player, gridIndex, targetBomb);
-        }
-
-        return;
-
-
-        if (player === 'primary') {
-
-
-            // // set bomb
-            // let targetGrid = this.dashboard.attackPrimaryBombs[index];
-            // targetGrid.status = this.targetBombed(player, index) ? 'bombed' : 'missed';
-            // this.dashboard.attackPrimaryBombs[index] = targetGrid;
-
-
-            // check any boat is crashed
-            const newlyCrashedBoatIndex = this.checkAnyBoatCrashed(player);
-
-            if (newlyCrashedBoatIndex != -1) {
-                // // alert(`boat with index: ${newlyCrashedBoatIndex} crashed`);
-                // let targetBoat = this.dashboard.primaryBoats[newlyCrashedBoatIndex];
-                // targetBoat.status = 'crashed';
-                // //console.log(JSON.stringify(targetBoat));
-                // this.dashboard.primaryBoats[newlyCrashedBoatIndex] = targetBoat;
-
-                // // starting grid css: grid-area calculation: CssGridArea
-                // const startingGridIndex = this.convertGridIdToIndex(targetBoat.gridsTaken[0]);
-                // const area: CssGridArea = this.getBoatCssGridArea(targetBoat);
-                // let targetBomb = this.dashboard.attackPrimaryBombs[startingGridIndex];
-                // targetBomb.cssGridArea = area;
-                // targetBomb.crashedBoat = targetBoat;
-                // this.dashboard.attackPrimaryBombs[startingGridIndex] = targetBomb;
-
-                // console.log(targetBoat.gridsTaken);
-
-                // hide grid
-                for (let i = 1; i < targetBoat.gridsTaken.length; i++) {
-                    const gridIndex = this.convertGridIdToIndex(targetBoat.gridsTaken[i]);
-                    // console.log(`gridIndex: ${gridIndex}`);
-                    let targetBomb = this.dashboard.attackPrimaryBombs[gridIndex];
-                    targetBomb.cssGridArea = 'hidden';
-                    this.dashboard.attackPrimaryBombs[gridIndex] = targetBomb;
-                }
-
-            }
-
         }
     }
 
@@ -218,7 +217,7 @@ export default class BombGameStore {
     getBoatCssGridArea(boat: Boat): CssGridArea {
         const gridId = boat.gridsTaken[0];
         const gridIndex = parseInt(gridId.replace('grid', ''));
-        console.log(`gridIndex: ${gridIndex}`)
+        // console.log(`gridIndex: ${gridIndex}`)
         const row_start = Math.floor(gridIndex / this.gridSize) + 1;
         const column_start = (gridIndex % this.gridSize) + 1;
 
@@ -249,21 +248,26 @@ export default class BombGameStore {
 
         const validBombs = bombs.filter(x => x.status === 'bombed');
 
+        // console.log(`checkAnyBoatCrashed:  boats.length: ${boats.length}`);
+
         for (let i = 0; i < boats.length; i++) {
             const boat = boats[i];
             if (boat.status === 'crashed') {
                 continue;
             }
 
-            let crashed = true;
-            for (let j = 0; j < boat.gridsTaken.length; j++) {
-                const gridId = boat.gridsTaken[j]; // grid1
-                const gridIndex = parseInt(gridId.replace('grid', '')); // 1
-                if (validBombs.filter(x => x.index === gridIndex).length === 0) {
-                    crashed = false;
-                    break;
-                }
-            }
+
+            const crashed = this.checkBoatCrashed(boat, validBombs);
+
+            // let crashed = true;
+            // for (let j = 0; j < boat.gridsTaken.length; j++) {
+            //     const gridId = boat.gridsTaken[j]; // grid1
+            //     const gridIndex = parseInt(gridId.replace('grid', '')); // 1
+            //     if (validBombs.filter(x => x.index === gridIndex).length === 0) {
+            //         crashed = false;
+            //         break;
+            //     }
+            // }
 
             if (crashed) {
                 return i;
@@ -274,11 +278,36 @@ export default class BombGameStore {
     }
 
 
+    checkBoatCrashed(boat: Boat, validBombs: Bomb[]): boolean {
+        // console.log('==================================================================')
+        // console.log(`checkBoatCrashed:  validBombs: ${JSON.stringify(validBombs)}`);
+        // console.log(`checkBoatCrashed:  boat.gridsTaken: ${JSON.stringify(boat.gridsTaken)}`);
+
+        let crashed = true;
+        for (let j = 0; j < boat.gridsTaken.length; j++) {
+
+            const gridIndex = this.convertGridIdToIndex(boat.gridsTaken[j]);
+            if (validBombs.filter(x => x.index === gridIndex).length === 0) {
+                crashed = false;
+                break;
+            }
+        }
+
+        return crashed;
+    }
+
+
     targetBombed(player: player, index: number): boolean {
 
-        const boats = this.isPrimaryPlayer() ? this.dashboard.primaryBoats : this.dashboard.secondaryBoats;
+        const boats = player === 'primary' ? this.dashboard.primaryBoats : this.dashboard.secondaryBoats;
+
+        // console.log(`this.dashboard.primaryBoats: ${JSON.stringify(this.dashboard.primaryBoats)}`);
+        // console.log(`boats.length: ${boats.length}`);
 
         for (let i = 0; i < boats.length; i++) {
+
+            // console.log(`boats[i]: ${JSON.stringify(boats[i])}`)
+
             for (let j = 0; j < boats[i].gridsTaken.length; j++) {
                 const gridId = boats[i].gridsTaken[j];
                 if (gridId === `grid${index}`) {
@@ -326,7 +355,6 @@ export default class BombGameStore {
         return this.currentPlayer === 'primary';
     }
 
-
     checkAllBoatsActive(): boolean {
         let result = true;
 
@@ -341,20 +369,20 @@ export default class BombGameStore {
     }
 
     handleDragStart(e: React.DragEvent<HTMLDivElement>, index: number): void {
-        // console.log('store handleDragStart')
-        // console.log(e);
         if (e.target) {
             // console.log(e.clientX);
             // console.log(e.clientY);
             this.draggingIndex = index;
             this.dragging = true;
             this.dragStartPosition = { x: e.clientX, y: e.clientY };
-            //console.log('dragStartPosition: ' + JSON.stringify(this.dragStartPosition));
+            console.log('dragStartPosition: ' + JSON.stringify(this.dragStartPosition));
         }
     }
 
     checkValidMove(position: BoatPosition): boolean | string[] {
+        // alert(JSON.stringify(position));
 
+        // FIXME
         let elements = document.elementsFromPoint(position.x + 50, position.y + 80 + 60);
 
         const gridElements = elements.filter(e => e.classList.contains('grid-item'));
@@ -376,8 +404,6 @@ export default class BombGameStore {
 
         const targetIndex = parseInt(targetId.replace('grid', ''));
         //console.log('targetIndex: ' + targetIndex);
-
-        // left/right direction [FIXME]
 
         if (this.draggingIndex === undefined) {
             console.warn('draggingIndex is undefined');
@@ -427,22 +453,43 @@ export default class BombGameStore {
 
         let targetBoat = this.boats[this.draggingIndex];
 
-        const newPosition: BoatPosition = {
+        let newPosition: BoatPosition = {
             x: targetBoat.position.x + delta.x,
             y: targetBoat.position.y + delta.y
         }
 
-        const validMove = this.checkValidMove(newPosition);
-        if (validMove === false) {
+        const gridsTaken = this.checkValidMove(newPosition);
+        if (typeof gridsTaken == "boolean" && gridsTaken === false) {
             return;
         }
+
+        // get center point for grids taken, and adjust position of boat
+        const centerPoint: BoatPosition = this.calculateCenterPoint(gridsTaken as string[]);
+        console.log(JSON.stringify(centerPoint));
+
+        const boatRect = document.getElementById(`ship${this.draggingIndex}`)!.getBoundingClientRect();
+        // const centerPointBoat: BoatPosition = { x: newPosition.x + boatRect.width / 2, y: newPosition.y + boatRect.height / 2 };
+        newPosition = {
+            x: centerPoint.x - boatRect.width / 2,
+            y: centerPoint.y - boatRect.height / 2
+        }
+        // // newPosition = {
+        // //     x: newPosition.x + (centerPoint.x - centerPointBoat.x) / 2,
+        // //     y: newPosition.y + (centerPoint.y - centerPointBoat.y) / 2
+        // // }
+        // console.log(JSON.stringify(centerPointBoat));
+        // document.getElementById('redDot')!.style.left = `${centerPoint.x}px`;
+        // document.getElementById('redDot')!.style.top = `${centerPoint.y}px`;
+
+        // document.getElementById('yellowDot')!.style.left = `${centerPointBoat.x}px`;
+        // document.getElementById('yellowDot')!.style.top = `${centerPointBoat.y}px`;
 
         // remove color of previous taken grids
         this.removeColorActive(targetBoat.gridsTaken);
 
         // set position
         targetBoat.position = newPosition;
-        targetBoat.gridsTaken = validMove as string[];
+        targetBoat.gridsTaken = gridsTaken as string[];
         this.setColorActive(targetBoat.gridsTaken);
 
         // update boats
@@ -470,9 +517,47 @@ export default class BombGameStore {
     }
 
 
-    saveBoatsToLocalStorage() {
+    calculateCenterPoint(takenGridIds: string[]): BoatPosition {
 
-        localStorage.setItem(`boat_${this.currentPlayer}`, JSON.stringify(this.boats));
+
+        const positionX: number[] = [];
+        const positionY: number[] = [];
+
+        for (let i = 0; i < takenGridIds.length; i++) {
+            const id = takenGridIds[i];
+            const react = document.getElementById(id)!.getBoundingClientRect();
+
+
+            console.log(JSON.stringify(react));
+            positionX.push(react.x);
+            positionX.push(react.x + react.width);
+
+
+
+            positionY.push(react.y);
+            positionY.push(react.y + react.height);
+        }
+
+
+
+        const maxX = Math.max(...positionX.map(x => x));
+        const minX = Math.min(...positionX.map(x => x));
+
+        const maxY = Math.max(...positionY.map(x => x));
+        const minY = Math.min(...positionY.map(x => x));
+
+        console.log(JSON.stringify({ minX, maxX }))
+        console.log(JSON.stringify({ minY, maxY }))
+
+        const center = { x: (maxX + minX) / 2 - 30, y: (maxY + minY) / 2 - 30 }
+        console.log(`center: ${JSON.stringify(center)}`)
+        return center;
+    }
+
+
+    saveBoatsToLocalStorage(player: player) {
+
+        localStorage.setItem(`boat_${player}`, JSON.stringify(this.boats));
 
 
         // clear boat data
@@ -486,9 +571,9 @@ export default class BombGameStore {
 
 
         // change player
-        if (this.isPrimaryPlayer()) {
+        if (player === 'primary') {
             this.currentPlayer = 'secondary';
-        } else {
+        } else if (player === 'secondary') {
             this.currentPlayer = 'bomb';
 
             // create initial dashboard
@@ -499,6 +584,8 @@ export default class BombGameStore {
 
             this.dashboard.attackPrimaryBombs = bombs;
             this.dashboard.attackSecondaryBombs = bombs;
+            this.dashboard.primaryBoats = this.getBoatsFromLocalStorage('primary');
+            this.dashboard.secondaryBoats = this.getBoatsFromLocalStorage('secondary');
         }
 
     }
