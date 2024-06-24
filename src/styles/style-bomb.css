@@ -75,7 +75,7 @@
     color: #fff;
 
     border: .3rem solid;
-    border-radius: .5rem;
+    border-radius: 1.5rem;
 
     cursor: pointer;
 }
@@ -110,15 +110,16 @@
 .container.bomb-dashboard .dashboard {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
 }
 
 .container.bomb-dashboard .grid-container {
-    width: 60vh;
-    height: 60vh;
+    width: 70vh;
+    height: 70vh;
+}
 
-    margin-left: 10rem;
+.container.bomb-dashboard .grid-container.primary {
+    margin-right: 10rem;
 }
 
 .container.bomb-dashboard .grid-container .grid-item.blank:hover {
@@ -137,6 +138,8 @@
     display: grid;
     place-items: center;
 
+    font-size: 4.5rem;
+
     cursor: not-allowed;
 }
 
@@ -146,14 +149,22 @@
 }
 
 
+.grid-container.primary .grid-item.crashed {
+    background-color: var(--primary);
+}
+
+.grid-container.secondary .grid-item.crashed {
+    background-color: var(--secondary);
+}
+
+
+
 .bomb-trigger-btn {
     position: absolute;
 
     left: 50%;
-    transform: translateX(-50%);
-
     top: 90%;
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(-50%);
 }
 
 
@@ -195,7 +206,7 @@
     position: relative;
     padding: 12px 27px;
     border-radius: 12px;
-    font-size: 2rem;
+    font-size: 6rem;
     color: white;
     background: hsl(345deg 100% 47%);
     transform: translateY(-4px);
@@ -204,12 +215,12 @@
 
 /* hover effect */
 .bomb-btn-pushable:hover .bomb-btn-front {
-    transform: translateY(-5px);
+    transform: translateY(-7px);
     transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
 }
 
 .bomb-btn-pushable:hover .bomb-btn-shadow {
-    transform: translateY(3px);
+    transform: translateY(4px);
     transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
 }
 

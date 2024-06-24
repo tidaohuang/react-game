@@ -2,6 +2,7 @@
 import { makeAutoObservable } from "mobx"
 import { player } from "../RotateGame/RotateGameStore";
 import { MouseEvent } from "react";
+import { store } from "../../stores/store";
 
 
 
@@ -52,10 +53,10 @@ export default class BombGameStore {
     dashboard: BoatDashboard = {
         attackPrimaryBombs: [],
         attackSecondaryBombs: [],
-        // primaryBoats: this.getBoatsFromLocalStorage('primary'),
-        // secondaryBoats: this.getBoatsFromLocalStorage('secondary')
-        primaryBoats: [],
-        secondaryBoats: []
+        primaryBoats: this.getBoatsFromLocalStorage('primary'),
+        secondaryBoats: this.getBoatsFromLocalStorage('secondary')
+        // primaryBoats: [],
+        // secondaryBoats: []
     }
 
     tempBombs: { primaryIndex?: number, secondaryIndex?: number } = {}
@@ -71,8 +72,8 @@ export default class BombGameStore {
 
     player1Ready = false;
     player2Ready = false;
-    currentPlayer: player | 'bomb' = 'primary';
-    // currentPlayer: player | 'bomb' = 'bomb';
+    // currentPlayer: player | 'bomb' = 'primary';
+    currentPlayer: player | 'bomb' = 'bomb';
 
     gridSize = 5;
 
@@ -140,6 +141,11 @@ export default class BombGameStore {
         this.bomb('secondary', this.tempBombs.secondaryIndex!);
 
         this.tempBombs = {};
+
+        if (this.dashboard.primaryBoats.filter(x => x.status === 'crashed').length > 2 ||
+            this.dashboard.primaryBoats.filter(x => x.status === 'crashed').length > 2) {
+            store.playerStore.toggleWinner();
+        }
     }
 
     bomb(player: player, index: number): void {
@@ -180,6 +186,9 @@ export default class BombGameStore {
             targetBomb.cssGridArea = 'hidden';
             this.updateBomb(player, gridIndex, targetBomb);
         }
+
+        // show congras
+        store.playerStore.toggleWinnerWithoutLoop();
     }
 
     updateBoat(player: player, index: number, boat: Boat) {

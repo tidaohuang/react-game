@@ -6,6 +6,7 @@ export default class PlayerStore {
 
 
     showWinner = false;
+    loop = true;
 
 
 
@@ -13,7 +14,14 @@ export default class PlayerStore {
         makeAutoObservable(this);
     }
 
-    toggleWinner(){
+    toggleWinner() {
+        this.loop = true;
         this.showWinner = !this.showWinner;
     }
+
+    toggleWinnerWithoutLoop() {
+        this.loop = false;
+        this.showWinner = !this.showWinner;
+    }
+
 }

@@ -24,9 +24,6 @@ export default observer(function BombGameDashboard() {
                 </div>
 
                 {bombStore.tempBombs.primaryIndex != undefined && bombStore.tempBombs.secondaryIndex != undefined &&
-                    // <div className="bomb-trigger-btn" onClick={() => bombStore.triggerBomb()}>
-                    //     引爆
-                    // </div>
                     <div className="bomb-trigger-btn" onClick={() => bombStore.triggerBomb()}>
                         <button className="bomb-btn-pushable">
                             <span className="bomb-btn-shadow"></span>

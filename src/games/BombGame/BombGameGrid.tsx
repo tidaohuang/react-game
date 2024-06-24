@@ -17,10 +17,11 @@ export default observer(function BombGameGrid(props: Props) {
         return (<></>);
     } else if (props.bomb.cssGridArea && !(props.bomb.cssGridArea instanceof String)) {
         const area = props.bomb.cssGridArea;
+        // const backgroundColor = props.player === 'primary' ? '#25AEF2' : '4EC9B0';
         // css grid
         return (
-            <div className={`grid-item ${props.bomb.status}`}
-                style={{ gridArea: `${area.row_start} / ${area.column_start} / ${area.row_end} / ${area.column_end}` }}
+            <div className={`grid-item ${props.bomb.status} crashed`}
+                style={{ gridArea: `${area.row_start} / ${area.column_start} / ${area.row_end} / ${area.column_end}`}}
             >
                 <img
                     src={`./games/bomb/submarine-${props.bomb.crashedBoat?.size}-${props.bomb.crashedBoat?.direction}.svg`}
@@ -31,7 +32,11 @@ export default observer(function BombGameGrid(props: Props) {
 
     return (
         <div className={`grid-item ${props.bomb.status}`}
-            onClick={() => bombStore.setBomb(props.player, props.bomb.index)}
+            onClick={() => {
+                if (props.bomb.status === 'blank') {
+                    bombStore.setBomb(props.player, props.bomb.index);
+                }
+            }}
         >
             {props.bomb.status === 'bombed' && <i className="fa-solid fa-bomb"></i>}
             {props.bomb.status === 'missed' && <i className="fa-solid fa-xmark"></i>}

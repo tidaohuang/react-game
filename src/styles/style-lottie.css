@@ -1,6 +1,10 @@
 .lottie {
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: -30rem;
+    left: 50%;
+    transform: translateX(-50%) ;
+
+    width: 90vw;
+    height: 120vh;
     z-index: 100;
 }
