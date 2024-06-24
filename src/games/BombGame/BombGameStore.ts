@@ -52,10 +52,10 @@ export default class BombGameStore {
     dashboard: BoatDashboard = {
         attackPrimaryBombs: [],
         attackSecondaryBombs: [],
-        primaryBoats: this.getBoatsFromLocalStorage('primary'),
-        secondaryBoats: this.getBoatsFromLocalStorage('secondary')
-        // primaryBoats: [],
-        // secondaryBoats: []
+        // primaryBoats: this.getBoatsFromLocalStorage('primary'),
+        // secondaryBoats: this.getBoatsFromLocalStorage('secondary')
+        primaryBoats: [],
+        secondaryBoats: []
     }
 
     tempBombs: { primaryIndex?: number, secondaryIndex?: number } = {}
@@ -71,8 +71,8 @@ export default class BombGameStore {
 
     player1Ready = false;
     player2Ready = false;
-    // currentPlayer: player | 'bomb' = 'primary';
-    currentPlayer: player | 'bomb' = 'bomb';
+    currentPlayer: player | 'bomb' = 'primary';
+    // currentPlayer: player | 'bomb' = 'bomb';
 
     gridSize = 5;
 
