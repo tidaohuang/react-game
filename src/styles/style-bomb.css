@@ -1,3 +1,10 @@
+.dot {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+
 .container.bomb {
     background-color: #01263d;
 }
@@ -22,21 +29,24 @@
 .ship-3-left,
 .ship-3-right {
     width: calc(80vh / 5 * (3 - .8));
+    height: calc(80vh / 5 * (3 - .8));
 }
 
 .ship-3-up,
 .ship-3-down {
+    width: calc(80vh / 5 * (3 - .8));
     height: calc(80vh / 5 * (3 - .8));
-    /* transform: rotate(90deg); */
 }
 
 .ship-2-left,
 .ship-2-right {
     width: calc(80vh / 5 * (2 - .8));
+    height: calc(80vh / 5 * (2 - .8));
 }
 
 .ship-2-up,
 .ship-2-down {
+    width: calc(80vh / 5 * (2 - .8));
     height: calc(80vh / 5 * (2 - .8));
 }
 

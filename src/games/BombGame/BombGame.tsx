@@ -5,9 +5,17 @@ import DraggableBoat from "./DraggableBoat";
 import BombGameDashboard from "./BombGameDashboard";
 
 
+export function allowDrop(ev: React.DragEvent<HTMLDivElement>): void {
+    ev.preventDefault();
+}
+
+
 export default observer(function BombGame() {
 
-    const { bombStore } = useStore();
+
+    
+
+    const { bombStore, slideShowStore } = useStore();
 
     if (bombStore.currentPlayer === 'bomb') {
         return (
@@ -16,19 +24,26 @@ export default observer(function BombGame() {
     }
 
 
-    function allowDrop(ev: React.DragEvent<HTMLDivElement>): void {
-        ev.preventDefault();
-    }
-
     return (
         <div className={`container bomb ${bombStore.currentPlayer}`}>
+
+            <div className="info" onClick={() => slideShowStore.toggleSlideShow([
+                "games/bomb/1.JPG",
+                "games/bomb/2.JPG",
+                "games/bomb/3.JPG",
+                "games/bomb/4.JPG",
+                "games/bomb/5.JPG",
+            ])}>
+                <i className="fa-solid fa-circle-info"></i>
+            </div>
+
             <div className="ship-container">
                 {bombStore.boats.map((boat: Boat, index: number) => (
                     <DraggableBoat key={index} id={index} boat={boat} />
                 ))}
 
-                {/* <div id='yellowDot' className="dot" style={{backgroundColor: 'yellow', zIndex: 1000}}></div>
-                <div id='redDot' className="dot" style={{backgroundColor: 'red', zIndex: 1000}} ></div> */}
+                {/* <div id='yellowDot' className="dot" style={{backgroundColor: 'yellow', zIndex: 1000, position: 'absolute'}}></div>
+                <div id='redDot' className="dot" style={{backgroundColor: 'red', zIndex: 1000,  position: 'absolute'}} ></div> */}
             </div>
             <div className="grid-container"
                 // id="grid"

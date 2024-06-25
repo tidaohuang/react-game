@@ -21,7 +21,9 @@ export interface Boat {
     size: BoatSize,
     direction: BoatDirection,
     gridsTaken: string[],
-    status?: 'crashed'
+    status?: 'crashed',
+
+    initialPosition: BoatPosition
 }
 
 export interface Bomb {
@@ -49,31 +51,30 @@ export interface BoatDashboard {
 
 export default class BombGameStore {
 
-
     dashboard: BoatDashboard = {
         attackPrimaryBombs: [],
         attackSecondaryBombs: [],
-        primaryBoats: this.getBoatsFromLocalStorage('primary'),
-        secondaryBoats: this.getBoatsFromLocalStorage('secondary')
-        // primaryBoats: [],
-        // secondaryBoats: []
+        // primaryBoats: this.getBoatsFromLocalStorage('primary'),
+        // secondaryBoats: this.getBoatsFromLocalStorage('secondary')
+        primaryBoats: [],
+        secondaryBoats: []
     }
 
     tempBombs: { primaryIndex?: number, secondaryIndex?: number } = {}
 
     initialBoats: Boat[] = [
-        { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [] },
-        { position: { x: 0, y: 200 }, direction: 'right', size: 3, gridsTaken: [] },
-        { position: { x: 0, y: 400 }, direction: 'right', size: 2, gridsTaken: [] },
-        { position: { x: 0, y: 600 }, direction: 'right', size: 2, gridsTaken: [] },
+        { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [], initialPosition: { x: 0, y: 0 } },
+        { position: { x: 0, y: 400 }, direction: 'right', size: 3, gridsTaken: [], initialPosition: { x: 0, y: 400 } },
+        { position: { x: 1500, y: 0 }, direction: 'right', size: 2, gridsTaken: [], initialPosition: { x: 1500, y: 0 } },
+        { position: { x: 1500, y: 300 }, direction: 'right', size: 2, gridsTaken: [], initialPosition: { x: 1500, y: 300 } },
     ]
 
     boats: Boat[] = this.initialBoats;
 
     player1Ready = false;
     player2Ready = false;
-    // currentPlayer: player | 'bomb' = 'primary';
-    currentPlayer: player | 'bomb' = 'bomb';
+    currentPlayer: player | 'bomb' = 'primary';
+    // currentPlayer: player | 'bomb' = 'bomb';
 
     gridSize = 5;
 
@@ -155,8 +156,6 @@ export default class BombGameStore {
         if (target === undefined) {
             throw new Error(`Bomb (playe: ${player}, index: ${index}) not found`);
         }
-        // console.log(JSON.stringify({ player, index }));
-        // console.log(JSON.stringify(target));
 
         target.status = this.targetBombed(player, index) ? 'bombed' : 'missed';
         this.updateBomb(player, index, target);
@@ -226,7 +225,6 @@ export default class BombGameStore {
     getBoatCssGridArea(boat: Boat): CssGridArea {
         const gridId = boat.gridsTaken[0];
         const gridIndex = parseInt(gridId.replace('grid', ''));
-        // console.log(`gridIndex: ${gridIndex}`)
         const row_start = Math.floor(gridIndex / this.gridSize) + 1;
         const column_start = (gridIndex % this.gridSize) + 1;
 
@@ -256,28 +254,13 @@ export default class BombGameStore {
         }
 
         const validBombs = bombs.filter(x => x.status === 'bombed');
-
-        // console.log(`checkAnyBoatCrashed:  boats.length: ${boats.length}`);
-
         for (let i = 0; i < boats.length; i++) {
             const boat = boats[i];
             if (boat.status === 'crashed') {
                 continue;
             }
 
-
             const crashed = this.checkBoatCrashed(boat, validBombs);
-
-            // let crashed = true;
-            // for (let j = 0; j < boat.gridsTaken.length; j++) {
-            //     const gridId = boat.gridsTaken[j]; // grid1
-            //     const gridIndex = parseInt(gridId.replace('grid', '')); // 1
-            //     if (validBombs.filter(x => x.index === gridIndex).length === 0) {
-            //         crashed = false;
-            //         break;
-            //     }
-            // }
-
             if (crashed) {
                 return i;
             }
@@ -288,10 +271,6 @@ export default class BombGameStore {
 
 
     checkBoatCrashed(boat: Boat, validBombs: Bomb[]): boolean {
-        // console.log('==================================================================')
-        // console.log(`checkBoatCrashed:  validBombs: ${JSON.stringify(validBombs)}`);
-        // console.log(`checkBoatCrashed:  boat.gridsTaken: ${JSON.stringify(boat.gridsTaken)}`);
-
         let crashed = true;
         for (let j = 0; j < boat.gridsTaken.length; j++) {
 
@@ -301,22 +280,13 @@ export default class BombGameStore {
                 break;
             }
         }
-
         return crashed;
     }
 
 
     targetBombed(player: player, index: number): boolean {
-
         const boats = player === 'primary' ? this.dashboard.primaryBoats : this.dashboard.secondaryBoats;
-
-        // console.log(`this.dashboard.primaryBoats: ${JSON.stringify(this.dashboard.primaryBoats)}`);
-        // console.log(`boats.length: ${boats.length}`);
-
         for (let i = 0; i < boats.length; i++) {
-
-            // console.log(`boats[i]: ${JSON.stringify(boats[i])}`)
-
             for (let j = 0; j < boats[i].gridsTaken.length; j++) {
                 const gridId = boats[i].gridsTaken[j];
                 if (gridId === `grid${index}`) {
@@ -335,7 +305,7 @@ export default class BombGameStore {
         })
 
         targetBoat.gridsTaken = [];
-        targetBoat.position = { x: 0, y: 0 };
+        targetBoat.position = targetBoat.initialPosition;
         this.boats[index] = targetBoat;
     }
 
@@ -379,20 +349,17 @@ export default class BombGameStore {
 
     handleDragStart(e: React.DragEvent<HTMLDivElement>, index: number): void {
         if (e.target) {
-            // console.log(e.clientX);
-            // console.log(e.clientY);
             this.draggingIndex = index;
             this.dragging = true;
             this.dragStartPosition = { x: e.clientX, y: e.clientY };
-            console.log('dragStartPosition: ' + JSON.stringify(this.dragStartPosition));
         }
     }
 
     checkValidMove(position: BoatPosition): boolean | string[] {
-        // alert(JSON.stringify(position));
 
         // FIXME
-        let elements = document.elementsFromPoint(position.x + 50, position.y + 80 + 60);
+        // let elements = document.elementsFromPoint(position.x + 50, position.y + 80 + 60);
+        let elements = document.elementsFromPoint(position.x, position.y);
 
         const gridElements = elements.filter(e => e.classList.contains('grid-item'));
 
@@ -412,8 +379,6 @@ export default class BombGameStore {
         const targetId = element.id;
 
         const targetIndex = parseInt(targetId.replace('grid', ''));
-        //console.log('targetIndex: ' + targetIndex);
-
         if (this.draggingIndex === undefined) {
             console.warn('draggingIndex is undefined');
             return false;
@@ -462,10 +427,23 @@ export default class BombGameStore {
 
         let targetBoat = this.boats[this.draggingIndex];
 
-        let newPosition: BoatPosition = {
-            x: targetBoat.position.x + delta.x,
-            y: targetBoat.position.y + delta.y
+        const boatRect = document.getElementById(`ship${this.draggingIndex}`)!.getBoundingClientRect();
+
+
+        let newPosition: BoatPosition = { x: 0, y: 0 };
+        if (targetBoat.direction === 'left' || targetBoat.direction === 'right') {
+            newPosition = {
+                x: targetBoat.position.x + delta.x,
+                y: targetBoat.position.y + delta.y + boatRect.width / 2
+            }
+        } else {
+            newPosition = {
+                x: targetBoat.position.x + delta.x + boatRect.width / 2,
+                y: targetBoat.position.y + delta.y
+            }
         }
+        // document.getElementById('redDot')!.style.left = `${newPosition.x}px`;
+        // document.getElementById('redDot')!.style.top = `${newPosition.y}px`;
 
         const gridsTaken = this.checkValidMove(newPosition);
         if (typeof gridsTaken == "boolean" && gridsTaken === false) {
@@ -474,24 +452,15 @@ export default class BombGameStore {
 
         // get center point for grids taken, and adjust position of boat
         const centerPoint: BoatPosition = this.calculateCenterPoint(gridsTaken as string[]);
-        console.log(JSON.stringify(centerPoint));
+        // document.getElementById('yellowDot')!.style.left = `${centerPoint.x}px`;
+        // document.getElementById('yellowDot')!.style.top = `${centerPoint.y}px`;
 
-        const boatRect = document.getElementById(`ship${this.draggingIndex}`)!.getBoundingClientRect();
+
         // const centerPointBoat: BoatPosition = { x: newPosition.x + boatRect.width / 2, y: newPosition.y + boatRect.height / 2 };
         newPosition = {
             x: centerPoint.x - boatRect.width / 2,
             y: centerPoint.y - boatRect.height / 2
         }
-        // // newPosition = {
-        // //     x: newPosition.x + (centerPoint.x - centerPointBoat.x) / 2,
-        // //     y: newPosition.y + (centerPoint.y - centerPointBoat.y) / 2
-        // // }
-        // console.log(JSON.stringify(centerPointBoat));
-        // document.getElementById('redDot')!.style.left = `${centerPoint.x}px`;
-        // document.getElementById('redDot')!.style.top = `${centerPoint.y}px`;
-
-        // document.getElementById('yellowDot')!.style.left = `${centerPointBoat.x}px`;
-        // document.getElementById('yellowDot')!.style.top = `${centerPointBoat.y}px`;
 
         // remove color of previous taken grids
         this.removeColorActive(targetBoat.gridsTaken);
@@ -506,7 +475,6 @@ export default class BombGameStore {
         this.dragging = false;
         this.draggingIndex = undefined;
 
-
         // check all 
         if (this.checkAllBoatsActive()) {
             if (this.isPrimaryPlayer()) {
@@ -515,20 +483,10 @@ export default class BombGameStore {
                 this.player2Ready = true;
             }
         }
-
-
-
-        // const react = document.getElementById('myship')!.getBoundingClientRect();
-        // console.log(`size: (width: ${react.width}, height: ${react.height})`);
-        // console.log(`correct previous pos: (x: ${react.x}, y: ${react.y})`);
-        // console.log(`pos: (x: ${newPosition.x}, y: ${newPosition.y})`);
-
     }
 
 
     calculateCenterPoint(takenGridIds: string[]): BoatPosition {
-
-
         const positionX: number[] = [];
         const positionY: number[] = [];
 
@@ -536,18 +494,12 @@ export default class BombGameStore {
             const id = takenGridIds[i];
             const react = document.getElementById(id)!.getBoundingClientRect();
 
-
-            console.log(JSON.stringify(react));
             positionX.push(react.x);
             positionX.push(react.x + react.width);
-
-
 
             positionY.push(react.y);
             positionY.push(react.y + react.height);
         }
-
-
 
         const maxX = Math.max(...positionX.map(x => x));
         const minX = Math.min(...positionX.map(x => x));
@@ -555,19 +507,13 @@ export default class BombGameStore {
         const maxY = Math.max(...positionY.map(x => x));
         const minY = Math.min(...positionY.map(x => x));
 
-        console.log(JSON.stringify({ minX, maxX }))
-        console.log(JSON.stringify({ minY, maxY }))
-
         const center = { x: (maxX + minX) / 2 - 30, y: (maxY + minY) / 2 - 30 }
-        console.log(`center: ${JSON.stringify(center)}`)
         return center;
     }
 
 
     saveBoatsToLocalStorage(player: player) {
-
         localStorage.setItem(`boat_${player}`, JSON.stringify(this.boats));
-
 
         // clear boat data
         this.boats = this.initialBoats;
@@ -577,7 +523,6 @@ export default class BombGameStore {
         elems.forEach((e) => {
             e.classList.remove("active");
         })
-
 
         // change player
         if (player === 'primary') {
