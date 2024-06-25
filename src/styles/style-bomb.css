@@ -4,6 +4,16 @@
     border-radius: 50%;
 }
 
+.bomb-card-top {
+    padding: 0;
+    position: relative;
+}
+
+.game-card-logo.bomb-logo {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
 
 .container.bomb {
     background-color: #01263d;

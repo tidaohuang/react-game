@@ -45,6 +45,7 @@ export default function HomePage() {
                             <div className="stars">
                                 <i className="fa-solid fa-star"></i>
                                 <i className="fa-solid fa-star"></i>
+                                <i className="fa-solid fa-star"></i>
                             </div>
                         </div>
 
@@ -88,15 +89,15 @@ export default function HomePage() {
 
                     </div>
                 </div>
-                <div className="game-card" onClick={() => alert('開發中')}>
-                    <div className="game-card-top">
-                        {/* <img src="rotate-game-logo.svg" className="game-card-logo" /> */}
+                <div className="game-card" onClick={() => window.location.href = navbarStore.getUrl(PAGE.Bomb)}>
+                    <div className="game-card-top bomb-card-top">
+                        <img src="bomb-game-logo.svg" className="game-card-logo bomb-logo" />
                     </div>
                     <div className="game-card-bottom">
                         <div className="game-title">
                             深水炸彈
-                            <div className="tag dev">
-                                開發中
+                            <div className="tag green">
+                                LIVE
                             </div>
                         </div>
 
@@ -120,8 +121,6 @@ export default function HomePage() {
                         <div className="game-rate">
                             <div className="game-complexity">難易度</div>
                             <div className="stars">
-                                <i className="fa-solid fa-star"></i>
-                                <i className="fa-solid fa-star"></i>
                                 <i className="fa-solid fa-star"></i>
                                 <i className="fa-solid fa-star"></i>
                             </div>

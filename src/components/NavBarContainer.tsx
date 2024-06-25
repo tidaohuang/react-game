@@ -27,7 +27,7 @@ export default observer(function NavBarContainer() {
                     <a href={navbarStore.getUrl(PAGE.FiveSeconds)} className="nav-link">5秒反應</a>
                 </li>
                 <li className="nav-item">
-                    <a href={navbarStore.getUrl(PAGE.Bomb)} className="nav-link">海戰棋</a>
+                    <a href={navbarStore.getUrl(PAGE.Bomb)} className="nav-link">深水炸彈</a>
                 </li>
             </ul>
         </nav>
