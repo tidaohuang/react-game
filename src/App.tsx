@@ -9,6 +9,7 @@ import { PAGE } from "./stores/NavBarStore";
 import RotateGame from "./games/RotateGame/RotateGame";
 import FiveSecondsGame from "./games/FiveSecondsGame/FiveSecondsGame";
 import BombGame from "./games/BombGame/BombGame";
+import HomePageTest from "./components/HomePageTest";
 
 function App() {
 	const parsed = queryString.parse(window.location.search);
@@ -23,6 +24,8 @@ function App() {
 		content.push(<FiveSecondsGame key={PAGE.FiveSeconds} />)
 	} else if (game === PAGE.Bomb) {
 		content.push(<BombGame key={PAGE.Bomb} />)
+	}  else if (game === PAGE.Test) {
+		content.push(<HomePageTest key={PAGE.Test} />)
 	} else {
 		content.push(<HomePage key={PAGE.Home} />)
 	}
