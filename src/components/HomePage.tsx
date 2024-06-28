@@ -1,220 +1,124 @@
-import { PAGE } from "../stores/NavBarStore";
-import { useStore } from "../stores/store"
+import { useEffect } from "react";
+import { store, useStore } from "../stores/store"
+import { KeyboardEventKey } from "../constants/KeyboardEvent";
+import { observer } from "mobx-react-lite";
+
+export default observer(function HomePage() {
+
+    const { navbarStore, homeStore } = useStore();
 
 
-export default function HomePage() {
+    const content = [];
 
-    const { navbarStore } = useStore();
+
+    for (let i = 0; i < homeStore.gameIndexes.length; i++) {
+        const card = homeStore.games[homeStore.gameIndexes[i]];
+        let cardStyle = undefined;
+        if (i === 0){
+            cardStyle = 'game-card blur-left';
+        } else if (i === homeStore.gameIndexes.length-1){
+            cardStyle = 'game-card blur-right';
+        } else {
+            cardStyle = 'game-card';
+        }
+
+        content.push(
+            <div className={cardStyle} key={card.page}
+                onClick={() => window.location.href = navbarStore.getUrl(card.page)}>
+                <div className="game-card-top">
+                    <img src={card.img} className={`game-card-logo ${card.page}-logo`} />
+                </div>
+                <div className="game-card-bottom">
+                    <div className="game-title">
+                        {card.name}
+                        <div className={`tag ${card.tag}`}>
+                            {card.tag === 'green' && 'Live'}
+                            {card.tag === 'dev' && '開發中'}
+                        </div>
+                    </div>
+
+                    <div className="game-card-meta">
+                        <div className="meta">人數</div>
+                        <div className="meta-value">{card.playerNumber}</div>
+                    </div>
+                    <div className="game-card-meta">
+                        <div className="meta">時間</div>
+                        <div className="meta-value">{card.time}</div>
+                    </div>
+                    <div className="game-card-meta">
+                        <div className="meta">類型</div>
+                        <div className="meta-value">
+                            {card.category}
+                            {card.category === '益智類' && <i className="fa fa-brain"></i>}
+                            {card.category === '反應類' && <i className="fa-solid fa-gauge"></i>}
+                        </div>
+                    </div>
+
+
+                    <div className="game-rate">
+                        <div className="game-complexity">難易度</div>
+                        <div className="stars">
+                            {card.complexity === 1 &&
+                                <i className="fa-solid fa-star"></i>
+                            }
+                            {card.complexity === 2 &&
+                                <>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                </>
+                            }
+                            {card.complexity === 3 &&
+                                <>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                </>
+                            }
+                            {card.complexity === 4 &&
+                                <>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                </>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        )
+    }
+
+    useEffect(() => {
+        console.log('use effect called ...');
+        document.addEventListener("keydown", homePageKeyDownHandler);
+
+        return () => {
+            console.log('use effect cleaned !');
+            document.removeEventListener("keydown", homePageKeyDownHandler);
+        }
+
+
+    }, [homeStore.gameIndexes]);
+
 
 
     return (
         <div className="container home">
-
             <div className="game-card-wrapper">
-
-                <div className="game-card blur-left" onClick={() => window.location.href = navbarStore.getUrl(PAGE.Rotate)}>
-                    <div className="game-card-top">
-                        <img src="rotate-game-logo.svg" className="game-card-logo" />
-                    </div>
-                    <div className="game-card-bottom">
-                        <div className="game-title">
-                            旋轉棋
-                            <div className="tag green">
-                                Live
-                            </div>
-                        </div>
-
-                        <div className="game-card-meta">
-                            <div className="meta">人數</div>
-                            <div className="meta-value">2人</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">時間</div>
-                            <div className="meta-value">5-10 mins</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">類型</div>
-                            <div className="meta-value">
-                                益智類
-                                <i className="fa fa-brain"></i>
-                            </div>
-                        </div>
-
-
-                        <div className="game-rate">
-                            <div className="game-complexity">難易度</div>
-                            <div className="stars">
-                                <i className="fa-solid fa-star"></i>
-                                <i className="fa-solid fa-star"></i>
-                                <i className="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="game-card" onClick={() => window.location.href = navbarStore.getUrl(PAGE.Rotate)}>
-                    <div className="game-card-top">
-                        <img src="rotate-game-logo.svg" className="game-card-logo" />
-                    </div>
-                    <div className="game-card-bottom">
-                        <div className="game-title">
-                            旋轉棋
-                            <div className="tag green">
-                                Live
-                            </div>
-                        </div>
-
-                        <div className="game-card-meta">
-                            <div className="meta">人數</div>
-                            <div className="meta-value">2人</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">時間</div>
-                            <div className="meta-value">5-10 mins</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">類型</div>
-                            <div className="meta-value">
-                                益智類
-                                <i className="fa fa-brain"></i>
-                            </div>
-                        </div>
-
-
-                        <div className="game-rate">
-                            <div className="game-complexity">難易度</div>
-                            <div className="stars">
-                                <i className="fa-solid fa-star"></i>
-                                <i className="fa-solid fa-star"></i>
-                                <i className="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="game-card" onClick={() => window.location.href = navbarStore.getUrl(PAGE.FiveSeconds)}>
-                    <div className="game-card-top">
-                        <img src="five-seconds-game-logo.svg" className="game-card-logo five-seconds" />
-                    </div>
-                    <div className="game-card-bottom">
-                        <div className="game-title">
-                            5秒反應
-                            <div className="tag green">
-                                Live
-                            </div>
-                        </div>
-
-                        <div className="game-card-meta">
-                            <div className="meta">人數</div>
-                            <div className="meta-value">不限</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">時間</div>
-                            <div className="meta-value">5-10 mins</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">類型</div>
-                            <div className="meta-value">
-                                反應類
-                                <i className="fa-solid fa-gauge"></i>
-                            </div>
-                        </div>
-
-
-                        <div className="game-rate">
-                            <div className="game-complexity">難易度</div>
-                            <div className="stars">
-                                <i className="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="game-card" onClick={() => window.location.href = navbarStore.getUrl(PAGE.Bomb)}>
-                    <div className="game-card-top">
-                        <img src="bomb-game-logo.svg" className="game-card-logo bomb-logo" />
-                    </div>
-                    <div className="game-card-bottom">
-                        <div className="game-title">
-                            深水炸彈
-                            <div className="tag green">
-                                LIVE
-                            </div>
-                        </div>
-
-                        <div className="game-card-meta">
-                            <div className="meta">人數</div>
-                            <div className="meta-value">2人</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">時間</div>
-                            <div className="meta-value">5-10 mins</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">類型</div>
-                            <div className="meta-value">
-                                益智類
-                                <i className="fa fa-brain"></i>
-                            </div>
-                        </div>
-
-
-                        <div className="game-rate">
-                            <div className="game-complexity">難易度</div>
-                            <div className="stars">
-                                <i className="fa-solid fa-star"></i>
-                                <i className="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="game-card blur-right" onClick={() => window.location.href = navbarStore.getUrl(PAGE.Bomb)}>
-                    <div className="game-card-top bomb-card-top">
-                        <img src="bomb-game-logo.svg" className="game-card-logo bomb-logo" />
-                    </div>
-                    <div className="game-card-bottom">
-                        <div className="game-title">
-                            深水炸彈
-                            <div className="tag green">
-                                LIVE
-                            </div>
-                        </div>
-
-                        <div className="game-card-meta">
-                            <div className="meta">人數</div>
-                            <div className="meta-value">2人</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">時間</div>
-                            <div className="meta-value">5-10 mins</div>
-                        </div>
-                        <div className="game-card-meta">
-                            <div className="meta">類型</div>
-                            <div className="meta-value">
-                                益智類
-                                <i className="fa fa-brain"></i>
-                            </div>
-                        </div>
-
-
-                        <div className="game-rate">
-                            <div className="game-complexity">難易度</div>
-                            <div className="stars">
-                                <i className="fa-solid fa-star"></i>
-                                <i className="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+                {content}
             </div>
-
         </div>
     )
+})
+
+
+
+function homePageKeyDownHandler(this: Document, event: KeyboardEvent) {
+    if (event.key === KeyboardEventKey.ARROW_RIGHT) {
+        store.homeStore.handleNext();
+    } else if (event.key === KeyboardEventKey.ARROW_LEFT) {
+        store.homeStore.handlePrevious();
+    }
 }

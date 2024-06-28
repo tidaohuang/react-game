@@ -1,7 +1,6 @@
 
 import { makeAutoObservable } from "mobx"
 import { player } from "../RotateGame/RotateGameStore";
-import { MouseEvent } from "react";
 import { store } from "../../stores/store";
 
 
@@ -23,7 +22,8 @@ export interface Boat {
     gridsTaken: string[],
     status?: 'crashed',
 
-    initialPosition: BoatPosition
+    initialPosition: React.CSSProperties
+    initial: boolean
 }
 
 export interface Bomb {
@@ -63,10 +63,10 @@ export default class BombGameStore {
     tempBombs: { primaryIndex?: number, secondaryIndex?: number } = {}
 
     initialBoats: Boat[] = [
-        { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [], initialPosition: { x: 0, y: 0 } },
-        { position: { x: 0, y: 400 }, direction: 'right', size: 3, gridsTaken: [], initialPosition: { x: 0, y: 400 } },
-        { position: { x: 1500, y: 0 }, direction: 'right', size: 2, gridsTaken: [], initialPosition: { x: 1500, y: 0 } },
-        { position: { x: 1500, y: 300 }, direction: 'right', size: 2, gridsTaken: [], initialPosition: { x: 1500, y: 300 } },
+        { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [], initial: true, initialPosition: { left: 0, top: 0 } },
+        { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [], initial: true, initialPosition: { left: 0, top: 400 } },
+        { position: { x: 0, y: 0 }, direction: 'right', size: 2, gridsTaken: [], initial: true, initialPosition: { right: 0, top: 0 } },
+        { position: { x: 0, y: 0 }, direction: 'right', size: 2, gridsTaken: [], initial: true, initialPosition: { right: 0, top: 300 } },
     ]
 
     boats: Boat[] = this.initialBoats;
@@ -305,7 +305,8 @@ export default class BombGameStore {
         })
 
         targetBoat.gridsTaken = [];
-        targetBoat.position = targetBoat.initialPosition;
+        // targetBoat.position = targetBoat.initialPosition;
+        targetBoat.initial = true;
         this.boats[index] = targetBoat;
     }
 
@@ -356,9 +357,6 @@ export default class BombGameStore {
     }
 
     checkValidMove(position: BoatPosition): boolean | string[] {
-
-        // FIXME
-        // let elements = document.elementsFromPoint(position.x + 50, position.y + 80 + 60);
         let elements = document.elementsFromPoint(position.x, position.y);
 
         const gridElements = elements.filter(e => e.classList.contains('grid-item'));
@@ -468,6 +466,7 @@ export default class BombGameStore {
         // set position
         targetBoat.position = newPosition;
         targetBoat.gridsTaken = gridsTaken as string[];
+        targetBoat.initial = false;
         this.setColorActive(targetBoat.gridsTaken);
 
         // update boats
