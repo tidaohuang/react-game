@@ -14,9 +14,9 @@ export default observer(function HomePage() {
     for (let i = 0; i < homeStore.gameIndexes.length; i++) {
         const card = homeStore.games[homeStore.gameIndexes[i]];
         let cardStyle = undefined;
-        if (i === 0){
+        if (i === 0) {
             cardStyle = 'game-card blur-left';
-        } else if (i === homeStore.gameIndexes.length-1){
+        } else if (i === homeStore.gameIndexes.length - 1) {
             cardStyle = 'game-card blur-right';
         } else {
             cardStyle = 'game-card';
@@ -39,7 +39,7 @@ export default observer(function HomePage() {
 
                     <div className="game-card-meta">
                         <div className="meta">人數</div>
-                        <div className="meta-value">{card.playerNumber}</div>
+                        <div className="meta-value">{card.playerNumber === 'unlimited' ? '不限' : card.playerNumber}</div>
                     </div>
                     <div className="game-card-meta">
                         <div className="meta">時間</div>
@@ -51,6 +51,7 @@ export default observer(function HomePage() {
                             {card.category}
                             {card.category === '益智類' && <i className="fa fa-brain"></i>}
                             {card.category === '反應類' && <i className="fa-solid fa-gauge"></i>}
+                            {card.category === '默契類' && <i className="fa-solid fa-heart-pulse"></i>}
                         </div>
                     </div>
 

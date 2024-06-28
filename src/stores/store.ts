@@ -7,12 +7,14 @@ import FiveSecondsStore from "../games/FiveSecondsGame/FiveSecondsStore";
 import PlayerStore from "./PlayerStore";
 import BombGameStore from "../games/BombGame/BombGameStore";
 import HomeStore from "./HomeStore";
+import HeartConnectStore from "../games/HeartConnectGame/HeartConnectStore";
 
 
 interface Store {
     rotateGameStore: RotateGameStore,
     fiveSecondsStore: FiveSecondsStore,
     bombStore: BombGameStore,
+    heartConnectStore: HeartConnectStore,
 
     modalStore: ModalStore,
     slideShowStore: SlideShowStore,
@@ -25,6 +27,7 @@ export const store: Store = {
     rotateGameStore: new RotateGameStore(),
     fiveSecondsStore: new FiveSecondsStore(),
     bombStore: new BombGameStore(),
+    heartConnectStore: new HeartConnectStore(),
 
     modalStore: new ModalStore,
     slideShowStore: new SlideShowStore(),

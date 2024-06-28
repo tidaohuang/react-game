@@ -10,6 +10,8 @@
     justify-content: space-evenly;
     align-items: center;
 
+
+    height: 48rem;
     /* border: 2px solid red; */
 }
 
@@ -157,7 +159,7 @@
 
 .container.home .game-card-wrapper{
     overflow: hidden;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .game-card.blur-left {
@@ -173,6 +175,10 @@
     opacity: 0.3;
 }
 
-/* .game-card {
-    transition: all 0.5s;
-} */
+
+
+@media screen and (min-width: 1920px) {
+    .game-card-wrapper {
+        transform: scale(1.2);   
+    }
+}

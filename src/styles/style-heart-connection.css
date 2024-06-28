@@ -1,0 +1,368 @@
+
+
+.game-card-logo.heart-connect-logo {
+    position: absolute;
+    width: 70%;
+}
+
+.container.heart-connection {
+    overflow: hidden;
+    background-color: #c4bfbe;
+}
+
+.heart-board {
+    width: 50rem;
+    height: 50rem;
+
+    display: grid;
+    place-items: center;
+
+    position: absolute;
+    bottom: -18rem;
+}
+
+.heart-pie {
+    width: 50rem;
+    height: 50rem;
+
+    border-radius: 50%;
+    border: .5rem solid #4B4B4B;
+
+    --white: white;
+    --yellow: #FFFA7A;
+    --orange: #FF695E;
+    --red: #D12020;
+    background-image: conic-gradient(var(--white) 120deg,
+            var(--yellow) 120deg, var(--yellow) 132deg,
+            var(--orange) 132deg, var(--orange) 144deg,
+            var(--red) 144deg, var(--red) 156deg,
+            var(--orange) 156deg, var(--orange) 168deg,
+            var(--yellow) 168deg, var(--yellow) 180deg,
+            var(--white) 180deg, var(--white) 300deg,
+            var(--yellow) 300deg, var(--yellow) 312deg,
+            var(--orange) 312deg, var(--orange) 324deg,
+            var(--red) 324deg, var(--red) 336deg,
+            var(--orange) 336deg, var(--orange) 348deg,
+            var(--yellow) 348deg);
+
+    /* transform: rotate(var(--pieDeg)); */
+
+    transition: transform 3s;
+}
+
+.heart-shield {
+    width: 50rem;
+    height: 50rem;
+
+    border-radius: 50%;
+    border: .5rem solid #4B4B4B;
+
+    background-image: conic-gradient(rgba(75, 75, 75, 0) 180deg, #c4bfbe 180deg);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.heart-shield.half {
+    background-image: conic-gradient(var(--primary) 180deg, #4B4B4B 180deg);
+}
+
+.heart-shied-square {
+
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+
+    width: 50rem;
+    height: 50rem;
+
+    border-top: .5rem solid #4B4B4B;
+    background-color: #c4bfbe;
+}
+
+.heart-shield.bottom {
+    transform: translate(-50%, -50%) rotate(-90deg);
+    background-image: conic-gradient(var(--error) 180deg, rgba(0, 0, 0, 0) 180deg);
+
+    transition: transform .8s;
+}
+
+.heart-shield.bottom.rotate {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.heart-pointer {
+    position: absolute;
+    top: calc(2rem - 0.4rem);
+    left: 50%;
+    /* transform: translateX(-50%) rotate(45deg); */
+    /* transform: translateX(-50%) rotate(var(--pointerDeg)); */
+    transform-origin: bottom;
+    height: 23rem;
+    width: 1rem;
+    background-color: #eee;
+    border: .38rem solid #1E1E1E;
+    /* background-color: #1E1E1E; */
+    border-radius: 50px;
+
+    cursor: pointer;
+}
+
+.heart-pointer-center {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border: .5rem solid #1E1E1E;
+    width: 3rem;
+    height: 3rem;
+
+    border-radius: 50%;
+    background-color: #eee;
+}
+
+.heart-keywords {
+    position: absolute;
+    width: 90vw;
+    bottom: 5rem;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.heart-keyword {
+    width: 15rem;
+    height: 40rem;
+    border-radius: 1rem;
+    background-color: white;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 600;
+
+    display: grid;
+    place-items: center;
+
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+/* score */
+
+.game-score-board {
+    width: 90rem;
+    height: 12rem;
+    /* border: 2px solid red; */
+
+    position: absolute;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.player1-outline {
+    clip-path: polygon(0 0, 90% 20%, 95% 80%, 12% 100%);
+    background-color: var(--primary);
+}
+
+.player2-outline {
+    clip-path: polygon(10% 20%, 100% 0%, 85% 100%, 4% 83%);
+    background-color: var(--secondary);
+}
+
+.game-score-board .player1,
+.game-score-board .player2 {
+    border-radius: 1rem;
+    width: 28rem;
+    height: 10rem;
+
+    display: grid;
+    place-items: center;
+}
+
+.game-score-board .player1 .name,
+.game-score-board .player2 .name {
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.game-score-board .score-outline {
+    border-top: .3rem solid #1E1E1E;
+    border-bottom: .3rem solid #1E1E1E;
+
+    /* background: linear-gradient(to right, var(--primary), var(--secondary)); */
+    background-color: #1E1E1E;
+    color: #fff;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+
+    margin-left: -16rem;
+    margin-right: -16rem;
+
+    position: inherit;
+    z-index: 2;
+
+    /* margin-left: -9rem;
+    margin-right: -9rem; */
+}
+
+.game-score-board .score {
+    width: 30rem;
+    height: 10rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-score-board .score .player1,
+.game-score-board .score .player2 {
+    font-size: 6rem;
+    font-weight: 800;
+}
+
+.game-score-board .score .player1 {
+    padding-left: 8rem;
+}
+
+.game-score-board .score .player2 {
+    padding-right: 8rem;
+}
+
+.game-score-board .score .divider {
+    font-size: 4rem;
+    font-weight: 500;
+}
+
+/* end of score */
+
+/* start btn */
+.game-start-btn {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background-color: var(--error);
+    border: .5rem solid #4B4B4B;
+    z-index: 5;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 5rem;
+    color: #fff;
+
+    cursor: pointer;
+}
+
+.game-start-btn.primary {
+    background-color: var(--primary);
+    /* border-color: var(--primary); */
+}
+
+.game-start-btn.secondary {
+    background-color: var(--secondary);
+    /* border-color: var(--secondary); */
+}
+
+.game-start-btn:hover {
+    background-color: #fff;
+    color: var(--error);
+}
+
+.game-start-btn.primary:hover {
+    color: var(--primary);
+}
+
+.game-start-btn.secondary:hover {
+    color: var(--secondary);
+}
+
+/* end of start btn */
+
+/* for big screen */
+:root {
+    --radius: 100rem;
+}
+
+@media screen and (min-width: 1920px) {
+    .heart-board {
+        width: var(--radius);
+        height: var(--radius);
+
+        bottom: -40rem;
+    }
+
+    .heart-pie {
+        width: var(--radius);
+        height: var(--radius);
+    }
+
+    .heart-shield {
+        width: var(--radius);
+        height: var(--radius);
+    }
+
+    .heart-shied-square {
+        width: var(--radius);
+        height: var(--radius);
+    }
+
+    .heart-pointer {
+        height: 45rem;
+        width: 2rem;
+        border-width: .5rem;
+
+        top: calc(5rem - 0.4rem);
+    }
+
+    .heart-pointer-center {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .heart-keywords {
+        bottom: 10rem;
+    }
+
+
+    .heart-keyword {
+        width: 20rem;
+        height: 70rem;
+
+        font-size: 6rem;
+        letter-spacing: .5rem;
+    }
+
+    .game-score-board {
+        top: 10rem;
+    }
+
+    .game-start-btn {
+        width: 15rem;
+        height: 15rem;
+
+        font-size: 7rem;
+    }
+
+
+    .game-score-board {
+        transform: translateX(-50%) scale(1.5);
+    }
+
+}
+
+/* end of for big screen */

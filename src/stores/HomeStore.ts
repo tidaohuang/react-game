@@ -53,9 +53,9 @@ export default class HomeStore {
         },
         {
             name: '心電感應',
-            img: undefined,
-            tag: 'dev',
-            page: PAGE.Test,
+            img: 'heart-connection-logo.svg',
+            tag: 'green',
+            page: PAGE.HeartConnect,
             playerNumber: 2,
             time: '5-10 mins',
             category: '默契類',
@@ -64,7 +64,7 @@ export default class HomeStore {
         {
             name: '步步為營',
             img: undefined,
-            tag: 'green',
+            tag: 'dev',
             page: PAGE.Home,
             playerNumber: 2,
             time: '5-10 mins',

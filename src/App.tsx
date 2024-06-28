@@ -9,6 +9,7 @@ import { PAGE } from "./stores/NavBarStore";
 import RotateGame from "./games/RotateGame/RotateGame";
 import FiveSecondsGame from "./games/FiveSecondsGame/FiveSecondsGame";
 import BombGame from "./games/BombGame/BombGame";
+import HeartConnectGame from "./games/HeartConnectGame/HeartConnectGame";
 
 function App() {
 	const parsed = queryString.parse(window.location.search);
@@ -23,6 +24,15 @@ function App() {
 		content.push(<FiveSecondsGame key={PAGE.FiveSeconds} />)
 	} else if (game === PAGE.Bomb) {
 		content.push(<BombGame key={PAGE.Bomb} />)
+	} else if (game === PAGE.HeartConnect) {
+
+		const mode = parsed?.mode;
+		if (mode != null) {
+			content.push(<HeartConnectGame mode={mode.toString()} key={PAGE.HeartConnect} />)
+		} else {
+			content.push(<HeartConnectGame key={PAGE.HeartConnect} />)
+		}
+
 	} else {
 		content.push(<HomePage key={PAGE.Home} />)
 	}

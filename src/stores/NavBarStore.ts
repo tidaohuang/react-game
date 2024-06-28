@@ -6,6 +6,7 @@ export enum PAGE {
     Rotate = 'rotate',
     FiveSeconds = 'five-seconds',
     Bomb = 'bomb',
+    HeartConnect = 'heart-connect',
     Test = 'test'
 }
 

@@ -7,4 +7,6 @@ export enum KeyboardEventKey {
     ARROW_LEFT = 'ArrowLeft',
     ARROW_UP = 'ArrowUp',
     ARROW_DOWN = 'ArrowDown',
+    EQUAL = '=',
+    MINUS = '-'
 }
