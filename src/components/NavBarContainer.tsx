@@ -6,7 +6,7 @@ import { PAGE } from "../constants/Pages";
 
 export default observer(function NavBarContainer() {
 
-    const { navbarStore } = useStore();
+    const { navbarStore, homeStore } = useStore();
 
     return (
         <nav className={`navbar ${navbarStore.show ? 'show' : ''}`}>
@@ -20,18 +20,12 @@ export default observer(function NavBarContainer() {
                 <li className="nav-item">
                     <a href={navbarStore.getUrl(PAGE.Home)} className="nav-link">Home</a>
                 </li>
-                <li className="nav-item">
-                    <a href={navbarStore.getUrl(PAGE.Rotate)} className="nav-link">旋轉棋</a>
-                </li>
-                <li className="nav-item">
-                    <a href={navbarStore.getUrl(PAGE.FiveSeconds)} className="nav-link">5秒反應</a>
-                </li>
-                <li className="nav-item">
-                    <a href={navbarStore.getUrl(PAGE.Bomb)} className="nav-link">深水炸彈</a>
-                </li>
-                <li className="nav-item">
-                    <a href={navbarStore.getUrl(PAGE.HeartConnect)} className="nav-link">心電感應</a>
-                </li>
+                {homeStore.games.map((g) => (
+                    g.tag === 'green' &&
+                    <li className="nav-item" key={g.page}>
+                        <a href={navbarStore.getUrl(g.page)} className="nav-link">{g.name}</a>
+                    </li>
+                ))}
             </ul>
         </nav>
     )
