@@ -7,7 +7,7 @@ import Information from "../../components/Information";
 
 export default observer(function RotateGame() {
 
-    const { rotateGameStore: rotateGame, modalStore, slideShowStore } = useStore();
+    const { rotateGameStore: rotateGame, modalStore } = useStore();
 
 
     const rotateHandler = () => {

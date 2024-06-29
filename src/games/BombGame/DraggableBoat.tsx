@@ -15,7 +15,7 @@ export default observer(function DraggableBoat(props: Props) {
 
     const { bombStore } = useStore();
 
-    let style: React.CSSProperties = {};
+    //let style: React.CSSProperties = {};
     // if (props.boat.initial) {
     //     console.log(JSON.stringify(props.boat.initialPosition))        
     //     style.top = props.boat.initialPosition.top;

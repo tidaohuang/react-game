@@ -1,14 +1,8 @@
 import { makeAutoObservable } from "mobx"
+import { PAGE } from "../constants/Pages";
 
 
-export enum PAGE {
-    Home = '',
-    Rotate = 'rotate',
-    FiveSeconds = 'five-seconds',
-    Bomb = 'bomb',
-    HeartConnect = 'heart-connect',
-    Test = 'test'
-}
+
 
 
 

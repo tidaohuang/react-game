@@ -5,11 +5,11 @@ import SlideShowContainer from "./components/SlideShowContainer";
 import HomePage from "./components/HomePage";
 import NvaBarContainer from "./components/NavBarContainer";
 import WinnerContainer from "./components/WinnerContainer";
-import { PAGE } from "./stores/NavBarStore";
 import RotateGame from "./games/RotateGame/RotateGame";
 import FiveSecondsGame from "./games/FiveSecondsGame/FiveSecondsGame";
 import BombGame from "./games/BombGame/BombGame";
 import HeartConnectGame from "./games/HeartConnectGame/HeartConnectGame";
+import { PAGE } from "./constants/Pages";
 
 function App() {
 	const parsed = queryString.parse(window.location.search);

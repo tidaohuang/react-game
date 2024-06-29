@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx"
 import { player } from "../RotateGame/RotateGameStore";
-import { shuffle } from "../../utils/commonFunction";
 import { questionPools } from "./HeartConnectQuestionPool";
 
 /**

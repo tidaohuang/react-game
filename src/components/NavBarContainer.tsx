@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import { useStore } from "../stores/store"
-import { PAGE } from "../stores/NavBarStore";
+import { PAGE } from "../constants/Pages";
 
 
 

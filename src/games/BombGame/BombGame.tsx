@@ -15,7 +15,7 @@ export default observer(function BombGame() {
 
     
 
-    const { bombStore, slideShowStore } = useStore();
+    const { bombStore } = useStore();
 
     if (bombStore.currentPlayer === 'bomb') {
         return (

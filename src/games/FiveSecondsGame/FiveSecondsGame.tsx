@@ -7,7 +7,7 @@ import Information from "../../components/Information";
 
 export default observer(function FiveSecondsGame() {
 
-    const { fiveSecondsStore, slideShowStore } = useStore();
+    const { fiveSecondsStore } = useStore();
 
     const question = fiveSecondsStore.getCurrentQuestion();
 
