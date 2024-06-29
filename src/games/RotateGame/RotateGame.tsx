@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import RotateGrid from "./RotateGrid";
 import { MyAlert } from "../../components/MyAlert";
+import Information from "../../components/Information";
 
 
 export default observer(function RotateGame() {
@@ -29,16 +30,16 @@ export default observer(function RotateGame() {
 
     return (
         <div className="container">
-            <div className="info" onClick={() => slideShowStore.toggleSlideShow([
+
+            <Information images={[
                 "games/rotate/1.JPG",
                 "games/rotate/2.JPG",
                 "games/rotate/3.JPG",
                 "games/rotate/4.JPG",
                 "games/rotate/5.JPG",
                 "games/rotate/6.JPG",
-            ])}>
-                <i className="fa-solid fa-circle-info"></i>
-            </div>
+            ]} />
+
             <div className={`grid-table ${rotateGame.currentPlayer}`}>
                 {/* // row 1 */}
                 <div className="grid-row">

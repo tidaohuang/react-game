@@ -30,7 +30,9 @@ export default observer(function HeartConnectGame(props: Props) {
     }
 
     return (
-        <>HeartConnectGame start</>
+        <div className="container heart-connection">
+            
+        </div>
     )
 })
 

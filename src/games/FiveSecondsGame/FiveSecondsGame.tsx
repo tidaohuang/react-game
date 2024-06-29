@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import FiveSecondsCounter from "./FiveSecondsCounter";
 import { useEffect, useState } from "react";
+import Information from "../../components/Information";
 
 
 export default observer(function FiveSecondsGame() {
@@ -24,15 +25,15 @@ export default observer(function FiveSecondsGame() {
 
     return (
         <div className="container five-seconds">
-            <div className="info" id="info" onClick={() => slideShowStore.toggleSlideShow([
+
+            <Information images={[
                 "games/fiveSeconds/1.JPG",
                 "games/fiveSeconds/2.JPG",
-            ])}>
-                <i className="fa-solid fa-circle-info"></i>
-            </div>
+            ]} />
+
             <div className="question-wrapper">
                 {!fiveSecondsStore.started &&
-                    <button className="start-btn" onClick={()=>{fiveSecondsStore.startGame()}}>開始</button>
+                    <button className="start-btn" onClick={() => { fiveSecondsStore.startGame() }}>開始</button>
                 }
                 {fiveSecondsStore.started &&
                     <>

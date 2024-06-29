@@ -3,7 +3,7 @@ import { useStore } from "../../stores/store";
 import { Boat } from "./BombGameStore";
 import DraggableBoat from "./DraggableBoat";
 import BombGameDashboard from "./BombGameDashboard";
-
+import Information from "../../components/Information";
 
 export function allowDrop(ev: React.DragEvent<HTMLDivElement>): void {
     ev.preventDefault();
@@ -27,15 +27,12 @@ export default observer(function BombGame() {
     return (
         <div className={`container bomb ${bombStore.currentPlayer}`}>
 
-            <div className="info" onClick={() => slideShowStore.toggleSlideShow([
-                "games/bomb/1.JPG",
+            <Information images={[ "games/bomb/1.JPG",
                 "games/bomb/2.JPG",
                 "games/bomb/3.JPG",
                 "games/bomb/4.JPG",
-                "games/bomb/5.JPG",
-            ])}>
-                <i className="fa-solid fa-circle-info"></i>
-            </div>
+                "games/bomb/5.JPG"
+            ]}/>
 
             <div className="ship-container">
                 {bombStore.boats.map((boat: Boat, index: number) => (

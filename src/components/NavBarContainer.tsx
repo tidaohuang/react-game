@@ -29,6 +29,9 @@ export default observer(function NavBarContainer() {
                 <li className="nav-item">
                     <a href={navbarStore.getUrl(PAGE.Bomb)} className="nav-link">深水炸彈</a>
                 </li>
+                <li className="nav-item">
+                    <a href={navbarStore.getUrl(PAGE.HeartConnect)} className="nav-link">心電感應</a>
+                </li>
             </ul>
         </nav>
     )
