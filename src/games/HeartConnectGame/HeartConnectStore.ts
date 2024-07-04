@@ -20,8 +20,6 @@ export interface HeartConnectQuestion {
     right: string
 }
 
-// '' | '' | '' | '' |
-//         '' | '' | '' | ''
 
 interface HeartConnectGameModel {
     guessingPieDegree: number,
@@ -57,6 +55,8 @@ export default class HeartConnectStore {
 
     constructor() {
         makeAutoObservable(this);
+
+        // this.model = JSON.parse(localStorage.getItem(this.EVENT_KEY)!);
     }
 
     createConnection() {
@@ -86,6 +86,8 @@ export default class HeartConnectStore {
         this.model = model;
 
         this.hub?.send(this.EVENT_KEY, this.model);
+
+
     }
 
     deductPoint() {

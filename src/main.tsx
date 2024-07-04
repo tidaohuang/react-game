@@ -13,11 +13,13 @@ import './styles/style-heart-connection.css';
 
 import { StoreContext, store } from './stores/store.ts';
 import App from './App.tsx';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router/Route.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <StoreContext.Provider value={store}>
-      <App />
+      <RouterProvider router={router} />
     </StoreContext.Provider>
   </React.StrictMode>,
 )

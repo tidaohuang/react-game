@@ -9,9 +9,6 @@ export default class StorageConnectionHub {
 
     on(eventKey: string, eventHandler: (...args: any[]) => any) {
         console.log(`window.addEventListener added: ${eventKey}`);
-
-
-        // window.addEventListener(eventKey, eventHandler);
         window.addEventListener('storage', (event: StorageEvent) => {
             if (event.key === eventKey){
 

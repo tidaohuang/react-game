@@ -5,22 +5,25 @@ import { store, useStore } from "../../stores/store";
 import HeartConnectBoard from "./HeartConnectBoard";
 import Information from "../../components/Information";
 import { MyAlert } from "../../components/MyAlert";
+import { useNavigate } from "react-router-dom";
+import queryString from "query-string";
 
-interface Props {
-    mode?: string
-}
+// interface Props {
+//     mode?: string
+// }
 
 
-export default observer(function HeartConnectGame(props: Props) {
-
+export default observer(function HeartConnectGame() {
+    const parsed = queryString.parse(window.location.search);
+    const [mode, setMode] = useState(parsed.mode);
     const { heartConnectStore, modalStore } = useStore();
-    
+
     if (heartConnectStore.hub === null) {
         heartConnectStore.createConnection();
-    } 
+    }
 
     useEffect(() => {
-        if (props.mode === 'player') {
+        if (mode === 'player') {
             document.addEventListener("keydown", heartConnectGameKeyDownHandler);
         }
         return () => {
@@ -28,14 +31,31 @@ export default observer(function HeartConnectGame(props: Props) {
         };
     }, []);
 
-    if (props.mode === 'player') {
-        return <HeartConnectBoard mode="player" />;
-    } else if (props.mode === 'leader') {
-        return <HeartConnectBoard mode="leader" />;
-    }
 
+    const navigate = useNavigate();
     const [player1, setPlayer1] = useState('');
     const [player2, setPlayer2] = useState('');
+
+    function startHandler() {
+        try {
+            heartConnectStore.setPlayers(player1, player2);
+            setMode('player');
+            navigate('/react-game/?g=heart-connect&mode=player');
+            // open new leader page
+            window.open('/react-game/?g=heart-connect&mode=leader', "_blank", "popup=yes");
+
+        } catch (error) {
+            if (error instanceof Error) {
+                modalStore.openModal(<MyAlert message={error.message} />);
+            }
+        }
+    }
+
+    if (mode === 'player') {
+        return <HeartConnectBoard mode="player" />;
+    } else if (mode === 'leader') {
+        return <HeartConnectBoard mode="leader" />;
+    }
 
     return (
         <div className="container heart-connection">
@@ -48,21 +68,6 @@ export default observer(function HeartConnectGame(props: Props) {
                 "games/heart-connect/6.JPG",
                 "games/heart-connect/7.JPG",
             ]} />
-
-
-            {
-                heartConnectStore.model.playerNames.primary.length > 0 &&
-                heartConnectStore.model.playerNames.secondary.length > 0 &&
-                <div className="start-btn-groups">
-                    <button type="button"
-                        onClick={() => window.open(`/react-game/?g=heart-connect&mode=player&player1=${heartConnectStore.model.playerNames.primary}&player2=${heartConnectStore.model.playerNames.secondary}`, '_blank')?.focus()}
-                    >Player</button>
-                    <button type="button"
-                        onClick={() => window.open(`/react-game/?g=heart-connect&mode=leader&player1=${heartConnectStore.model.playerNames.primary}&player2=${heartConnectStore.model.playerNames.secondary}`, '_blank')?.focus()}
-                    >Leader</button>
-                </div>
-
-            }
 
             {
                 (heartConnectStore.model.playerNames.primary.length == 0 ||
@@ -85,16 +90,7 @@ export default observer(function HeartConnectGame(props: Props) {
                         />
                     </div>
 
-                    <button type="button"
-                        onClick={() => {
-                            try {
-                                heartConnectStore.setPlayers(player1, player2);
-                            } catch (error) {
-                                if (error instanceof Error) {
-                                    modalStore.openModal(<MyAlert message={error.message} />);
-                                }
-                            }
-                        }}
+                    <button type="button" onClick={() => startHandler()}
                     >Start Game</button>
                 </div>
             }
