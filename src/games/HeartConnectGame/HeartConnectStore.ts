@@ -55,12 +55,9 @@ export default class HeartConnectStore {
 
     constructor() {
         makeAutoObservable(this);
-
-        // this.model = JSON.parse(localStorage.getItem(this.EVENT_KEY)!);
     }
 
     createConnection() {
-        console.log('create connection');
         this.hub = new StorageConnectionHub();
 
         this.hub.on(this.EVENT_KEY, (model: HeartConnectGameModel) => {

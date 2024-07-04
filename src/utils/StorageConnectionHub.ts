@@ -8,7 +8,7 @@ export default class StorageConnectionHub {
     }
 
     on(eventKey: string, eventHandler: (...args: any[]) => any) {
-        console.log(`window.addEventListener added: ${eventKey}`);
+        // console.log(`window.addEventListener added: ${eventKey}`);
         window.addEventListener('storage', (event: StorageEvent) => {
             if (event.key === eventKey){
 
@@ -23,9 +23,8 @@ export default class StorageConnectionHub {
     }
 
     send(eventKey: string, args: any) {
-        console.log(`trigger local storage event: ${eventKey}`);
+        // console.log(`trigger local storage event: ${eventKey}`);
         localStorage.setItem(eventKey, JSON.stringify(args));
-        // window.dispatchEvent(new CustomEvent(eventKey, { ...args }));
     }
 
 

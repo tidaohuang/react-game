@@ -8,10 +8,6 @@ import { MyAlert } from "../../components/MyAlert";
 import { useNavigate } from "react-router-dom";
 import queryString from "query-string";
 
-// interface Props {
-//     mode?: string
-// }
-
 
 export default observer(function HeartConnectGame() {
     const parsed = queryString.parse(window.location.search);
@@ -29,7 +25,7 @@ export default observer(function HeartConnectGame() {
         return () => {
             document.removeEventListener("keydown", heartConnectGameKeyDownHandler);
         };
-    }, []);
+    }, [mode]);
 
 
     const navigate = useNavigate();
@@ -102,7 +98,7 @@ export default observer(function HeartConnectGame() {
 })
 
 function heartConnectGameKeyDownHandler(this: Document, event: KeyboardEvent) {
-    console.log(event.key);
+    // console.log(event.key);
 
     if (store.heartConnectStore.model.status === 'guessDegree') {
         if (event.key === KeyboardEventKey.ARROW_RIGHT) {
