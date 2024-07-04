@@ -8,6 +8,7 @@ import PlayerStore from "./PlayerStore";
 import BombGameStore from "../games/BombGame/BombGameStore";
 import HomeStore from "./HomeStore";
 import HeartConnectStore from "../games/HeartConnectGame/HeartConnectStore";
+import TestGameStore from "../games/Test/TestGameStore";
 
 
 interface Store {
@@ -15,6 +16,7 @@ interface Store {
     fiveSecondsStore: FiveSecondsStore,
     bombStore: BombGameStore,
     heartConnectStore: HeartConnectStore,
+    // testGameStore: TestGameStore,
 
     modalStore: ModalStore,
     slideShowStore: SlideShowStore,
@@ -28,6 +30,7 @@ export const store: Store = {
     fiveSecondsStore: new FiveSecondsStore(),
     bombStore: new BombGameStore(),
     heartConnectStore: new HeartConnectStore(),
+    // testGameStore: new TestGameStore(),
 
     modalStore: new ModalStore,
     slideShowStore: new SlideShowStore(),

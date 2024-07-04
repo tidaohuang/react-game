@@ -1,6 +1,7 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, runInAction } from "mobx"
 import { player } from "../RotateGame/RotateGameStore";
 import { questionPools } from "./HeartConnectQuestionPool";
+import StorageConnectionHub from "../../utils/StorageConnectionHub";
 
 /**
  * process
@@ -19,30 +20,77 @@ export interface HeartConnectQuestion {
     right: string
 }
 
+// '' | '' | '' | '' |
+//         '' | '' | '' | ''
+
+interface HeartConnectGameModel {
+    guessingPieDegree: number,
+    pieDegree: number,
+    questions: HeartConnectQuestion,
+    status: 'init' | 'nextQuestion' | 'guessDegree' | 'showResult',
+    showingPie: boolean,
+    player: player,
+    scores: { primary: number, secondary: number },
+    playerNames: { primary: string, secondary: string }
+}
+
 
 export default class HeartConnectStore {
+    EVENT_KEY = 'HEART_CONNECT_MODEL';
 
-
-
-    showingPie = false;
-    status: 'init' | 'nextQuestion' | 'guessDegree' | 'showResult' = 'init';
-    guessingPieDegree: number = 0;
-    pieDegree: number = 30;
     questionPools: HeartConnectQuestion[] = questionPools;
-    questions: HeartConnectQuestion = { left: '', right: '' }
-    player: player = 'secondary';
-    scores: { primary: number, secondary: number } = { primary: 0, secondary: 0 }
-    playerNames: { primary: string, secondary: string } = { primary: 'Player 1', secondary: 'Player 2' }
+
+    hub: StorageConnectionHub | null = null;
+
+
+    model: HeartConnectGameModel = {
+        showingPie: false,
+        status: 'init',
+        guessingPieDegree: 0,
+        pieDegree: 30,
+        questions: { left: '', right: '' },
+        player: 'secondary',
+        scores: { primary: 0, secondary: 0 },
+        playerNames: { primary: '', secondary: '' }
+    }
+
 
     constructor() {
         makeAutoObservable(this);
+    }
 
-        localStorage.setItem('status', 'init');
+    createConnection() {
+        console.log('create connection');
+        this.hub = new StorageConnectionHub();
+
+        this.hub.on(this.EVENT_KEY, (model: HeartConnectGameModel) => {
+            runInAction(() => {
+                this.model = model;
+            });
+        });
+    }
+
+
+    setPlayers(player1: string, player2: string): void {
+        if (player1.length === 0) {
+            throw new Error('請輸入Player1');
+        } else if (player2.length === 0) {
+            throw new Error('請輸入Player2');
+        }
+
+        let model = this.model;
+        model.playerNames = {
+            primary: player1,
+            secondary: player2
+        }
+        this.model = model;
+
+        this.hub?.send(this.EVENT_KEY, this.model);
     }
 
     deductPoint() {
-        let tempScore = this.scores;
-        if (this.player === 'primary') {
+        let tempScore = this.model.scores;
+        if (this.model.player === 'primary') {
             let tempValue = tempScore.primary - 1;
             if (tempValue < 0) {
                 tempValue = 0;
@@ -55,91 +103,84 @@ export default class HeartConnectStore {
             }
             tempScore.secondary = tempValue;
         }
-        this.scores = tempScore;
-        localStorage.setItem('scores', JSON.stringify(this.scores));
+
+        let model = this.model;
+        model.scores = tempScore;
+        this.model = model;
+        this.hub?.send(this.EVENT_KEY, this.model);
     }
 
     addPoint() {
-        let tempScore = this.scores;
-        if (this.player === 'primary') {
+        let tempScore = this.model.scores;
+        if (this.model.player === 'primary') {
             tempScore.primary = tempScore.primary + 1;;
         } else {
             tempScore.secondary = tempScore.secondary + 1;
         }
-        this.scores = tempScore;
-        localStorage.setItem('scores', JSON.stringify(this.scores));
+        let model = this.model;
+        model.scores = tempScore;
+        this.model = model;
+        this.hub?.send(this.EVENT_KEY, this.model);
     }
 
     showResult() {
-        this.status = 'showResult';
-        this.showingPie = true;
+        let model = this.model;
 
-        localStorage.setItem('status', this.status);
-        localStorage.setItem('showingPie', this.showingPie.toString());
+        model.status = 'showResult';
+        model.showingPie = true;
+
+        this.model = model;
+        this.hub?.send(this.EVENT_KEY, this.model);
     }
 
-    rotatePie(): void {
-        this.pieDegree = Math.floor(Math.random() * 360);
+    rotatePie(): number {
+        return Math.floor(Math.random() * 360);
     }
 
     nextQuestion(): void {
         const index = Math.floor(Math.random() * this.questionPools.length);
-        this.rotatePie();
-        this.questions = {
+        let model = this.model;
+        model.pieDegree = this.rotatePie();
+
+        model.questions = {
             left: this.questionPools[index].left,
             right: this.questionPools[index].right
         }
 
         this.questionPools = this.questionPools.filter((_, i) => i !== index);
 
-        this.status = 'guessDegree';
-        this.player = this.player === 'secondary' ? 'primary' : 'secondary';
-        this.showingPie = false;
-        this.guessingPieDegree = 0;
-
-        localStorage.setItem('guessingPieDegree', this.guessingPieDegree.toString());
-        localStorage.setItem('showingPie', this.showingPie.toString());
-        localStorage.setItem('player', this.player);
-        localStorage.setItem('status', this.status);
-        localStorage.setItem('pieDegree', this.pieDegree.toString());
-        localStorage.setItem('questions', JSON.stringify(this.questions));
-    }
-
-    sync(key: 'guessingPieDegree' | 'pieDegree' | 'questions' | 'status' |
-        'showingPie' | 'player' | 'scores'
-    ) {
-        if (key === 'guessingPieDegree') {
-            this.guessingPieDegree = parseInt(localStorage.getItem(key)!);
-        } else if (key === 'pieDegree') {
-            this.pieDegree = parseInt(localStorage.getItem(key)!);
-        } else if (key === 'questions') {
-            this.questions = JSON.parse(localStorage.getItem(key)!);
-        } else if (key === 'status') {
-            this.status = localStorage.getItem(key) as any;
-        } else if (key === 'showingPie') {
-            this.showingPie = JSON.parse(localStorage.getItem(key)!);
-        } else if (key === 'player') {
-            this.player = localStorage.getItem(key) as any;
-        } else if (key === 'scores') {
-            this.scores = JSON.parse(localStorage.getItem(key)!);
-        }
+        model.status = 'guessDegree';
+        model.player = model.player === 'secondary' ? 'primary' : 'secondary';
+        model.showingPie = false;
+        model.guessingPieDegree = 0;
+        this.model = model;
+        this.hub?.send(this.EVENT_KEY, this.model);
     }
 
     addDegree() {
-        let tempDegree = this.guessingPieDegree + 1;
+        let tempDegree = this.model.guessingPieDegree + 1;
         if (tempDegree > 90) {
             tempDegree = 90;
         }
-        this.guessingPieDegree = tempDegree;
-        localStorage.setItem('guessingPieDegree', tempDegree.toString());
+
+        let model = this.model;
+
+        model.guessingPieDegree = tempDegree;
+
+        this.model = model;
+        this.hub?.send(this.EVENT_KEY, this.model);
     }
 
     deductDegree() {
-        let tempDegree = this.guessingPieDegree - 1;
+        let tempDegree = this.model.guessingPieDegree - 1;
         if (tempDegree < -90) {
             tempDegree = -90;
         }
-        this.guessingPieDegree = tempDegree;
-        localStorage.setItem('guessingPieDegree', tempDegree.toString());
+
+        let model = this.model;
+
+        model.guessingPieDegree = tempDegree;
+        this.model = model;
+        this.hub?.send(this.EVENT_KEY, this.model);
     }
 }

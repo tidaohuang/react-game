@@ -1,5 +1,3 @@
-
-
 .game-card-logo.heart-connect-logo {
     position: absolute;
     width: 70%;
@@ -366,3 +364,90 @@
 }
 
 /* end of for big screen */
+
+/* form */
+
+.container.heart-connection .player-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.input-group {
+    position: relative;
+    margin: 1rem;
+}
+
+.input-group input {
+    width: 30rem;
+    height: 6rem;
+    padding: 1rem 1rem 1rem 4rem;
+    background-color: #ddd;
+    border: none;
+    border-radius: .5rem;
+
+    font-size: 2rem;
+}
+
+
+.input-group i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1rem;
+
+    font-size: 1.5rem;
+}
+
+.player-form button {
+    width: 30rem;
+    height: 6rem;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: #fff;
+    margin-top: 3rem;
+    cursor: pointer;
+
+    transition: background-color .5s;
+}
+
+.player-form button:hover {
+    background-color: var(--secondary);
+}
+/* end of form */
+
+
+.start-btn-groups {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.start-btn-groups button {
+    width: 30rem;
+    height: 6rem;
+    margin: 1rem;
+
+    border: none;
+    border-radius: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: #fff;
+    cursor: pointer;
+    font-size: 3rem;
+
+
+    background-color: var(--primary);
+
+    transition: background-color .5s;
+}
+
+
+.start-btn-groups button:hover{
+    background-color: var(--secondary);
+}

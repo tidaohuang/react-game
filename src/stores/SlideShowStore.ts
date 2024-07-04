@@ -96,6 +96,8 @@ export default class SlideShowStore {
 
 
 const keyDownHandler = (e: globalThis.KeyboardEvent) => {
+    console.log('SlideShowStore keyDownHandler ...')
+
     e.preventDefault();
     if (e.key === KeyboardEventKey.ESCAPE) {
         store.slideShowStore.closeSlideShow();

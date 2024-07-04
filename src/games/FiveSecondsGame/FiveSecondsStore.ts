@@ -20,7 +20,7 @@ export default class FiveSecondsStore {
         makeAutoObservable(this);
         this.questionPools = shuffle(questionPools, generateRandomGameId());
 
-        document.addEventListener("keydown", slideShowShortCutKeyDown);
+        // document.addEventListener("keydown", slideShowShortCutKeyDown);
     }
 
     startGame() {
@@ -30,7 +30,7 @@ export default class FiveSecondsStore {
         document.addEventListener("keydown", fiveSecondsGameKeyDownHandler);
 
         // remove slideshow listener
-        document.removeEventListener("keydown", slideShowShortCutKeyDown);
+        // document.removeEventListener("keydown", slideShowShortCutKeyDown);
     }
 
     getCurrentQuestion(): string {
@@ -51,6 +51,7 @@ export default class FiveSecondsStore {
 
 
 export const fiveSecondsGameKeyDownHandler = (e: globalThis.KeyboardEvent) => {
+    console.log('fiveSecondsGameKeyDownHandler');
     e.preventDefault();
     if (e.key === KeyboardEventKey.ENTER ||
         e.key === KeyboardEventKey.ARROW_RIGHT ||
@@ -60,10 +61,11 @@ export const fiveSecondsGameKeyDownHandler = (e: globalThis.KeyboardEvent) => {
     }
 }
 
-export const slideShowShortCutKeyDown = (e: globalThis.KeyboardEvent) => {
-    e.preventDefault();
-    if (e.key === 'i') {
-        document.getElementById("info")?.click();
-    }
-}
+// export const slideShowShortCutKeyDown = (e: globalThis.KeyboardEvent) => {
+//     console.log('slideShowShortCutKeyDown')
+//     e.preventDefault();
+//     if (e.key === 'i') {
+//         document.getElementById("info")?.click();
+//     }
+// }
 
