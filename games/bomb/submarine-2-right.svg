@@ -1,0 +1,15 @@
+<svg width="76" height="46" viewBox="0 0 76 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 5H7L10 27.5L22 22L13 5Z" fill="#2F4859"/>
+<path d="M3 5H7L13.5 27.5L5.5 28L3 5Z" fill="#D9D9D9"/>
+<path d="M13 46H7L10 23.5L22 29L13 46Z" fill="#2F4859"/>
+<path d="M3 46H7L13.5 23.5L5.5 23L3 46Z" fill="#D9D9D9"/>
+<rect x="30" y="14" width="16" height="25" fill="#64798A"/>
+<ellipse cx="31.5" cy="26.5" rx="31.5" ry="12.5" fill="#64798A"/>
+<ellipse cx="44.5" cy="26.5" rx="31.5" ry="12.5" fill="#64798A"/>
+<path d="M41.5 10V4.5C41.5 3.66667 42 2 44 2" stroke="#D5D6DB" stroke-width="3.5"/>
+<path d="M44 2H48" stroke="#D5D6DB" stroke-width="3.5"/>
+<path d="M35.5 9.5L32 14H50.5L48 9.5H35.5Z" fill="#64798A" stroke="#64798A" stroke-width="0.5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 27C0.641846 33.4742 13.6919 38.6832 29.9752 38.9861V39H31.4752H44.4752H45.9752V38.9861C62.2585 38.6832 75.3086 33.4742 75.9504 27H0Z" fill="#3A556A"/>
+<circle cx="42" cy="24" r="6" fill="#D5D6DB"/>
+<circle cx="42" cy="24" r="4" fill="#2D93BA"/>
+</svg>

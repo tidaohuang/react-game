@@ -1,0 +1,15 @@
+<svg width="76" height="46" viewBox="0 0 76 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M63 5H69L66 27.5L54 22L63 5Z" fill="#2F4859"/>
+<path d="M73 5H69L62.5 27.5L70.5 28L73 5Z" fill="#D9D9D9"/>
+<path d="M63 46H69L66 23.5L54 29L63 46Z" fill="#2F4859"/>
+<path d="M73 46H69L62.5 23.5L70.5 23L73 46Z" fill="#D9D9D9"/>
+<rect width="16" height="25" transform="matrix(-1 0 0 1 46 14)" fill="#64798A"/>
+<ellipse cx="31.5" cy="12.5" rx="31.5" ry="12.5" transform="matrix(-1 0 0 1 76 14)" fill="#64798A"/>
+<ellipse cx="31.5" cy="12.5" rx="31.5" ry="12.5" transform="matrix(-1 0 0 1 63 14)" fill="#64798A"/>
+<path d="M34.5 10V4.5C34.5 3.66667 34 2 32 2" stroke="#D5D6DB" stroke-width="3.5"/>
+<path d="M32 2H28" stroke="#D5D6DB" stroke-width="3.5"/>
+<path d="M40.5 9.5L44 14H25.5L28 9.5H40.5Z" fill="#64798A" stroke="#64798A" stroke-width="0.5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M76 27C75.3582 33.4741 62.308 38.6832 46.0247 38.9861V39H44.5247H31.5247H30.0247V38.9861C13.7414 38.6832 0.691269 33.4741 0.0494843 27H76Z" fill="#3A556A"/>
+<circle cx="6" cy="6" r="6" transform="matrix(-1 0 0 1 40 18)" fill="#D5D6DB"/>
+<circle cx="4" cy="4" r="4" transform="matrix(-1 0 0 1 38 20)" fill="#2D93BA"/>
+</svg>
