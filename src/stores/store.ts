@@ -8,7 +8,6 @@ import PlayerStore from "./PlayerStore";
 import BombGameStore from "../games/BombGame/BombGameStore";
 import HomeStore from "./HomeStore";
 import HeartConnectStore from "../games/HeartConnectGame/HeartConnectStore";
-import TestGameStore from "../games/Test/TestGameStore";
 
 
 interface Store {
