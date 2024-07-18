@@ -22,7 +22,7 @@ export interface Boat {
     gridsTaken: string[],
     status?: 'crashed',
 
-    initialPosition: React.CSSProperties
+    initialPosition: BoatPosition,
     initial: boolean
 }
 
@@ -48,6 +48,8 @@ export interface BoatDashboard {
     secondaryBoats: Boat[]
 }
 
+const right = window.innerWidth * 0.75;
+
 
 export default class BombGameStore {
 
@@ -63,10 +65,22 @@ export default class BombGameStore {
     tempBombs: { primaryIndex?: number, secondaryIndex?: number } = {}
 
     initialBoats: Boat[] = [
-        { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [], initial: true, initialPosition: { left: 0, top: 0 } },
-        { position: { x: 0, y: 0 }, direction: 'right', size: 3, gridsTaken: [], initial: true, initialPosition: { left: 0, top: 400 } },
-        { position: { x: 0, y: 0 }, direction: 'right', size: 2, gridsTaken: [], initial: true, initialPosition: { right: 0, top: 0 } },
-        { position: { x: 0, y: 0 }, direction: 'right', size: 2, gridsTaken: [], initial: true, initialPosition: { right: 0, top: 300 } },
+        {
+            position: { x: 0, y: 200 }, direction: 'right', size: 3, gridsTaken: [],
+            initial: true, initialPosition: { x: 0, y: 200 }
+        },
+        {
+            position: { x: 0, y: 0 }, direction: 'right', size: 2, gridsTaken: [],
+            initial: true, initialPosition: { x: 0, y: 0 }
+        },
+        {
+            position: { x: right, y: 200 }, direction: 'right', size: 3, gridsTaken: [],
+            initial: true, initialPosition: { x: right, y: 200 }
+        },
+        {
+            position: { x: right, y: 0 }, direction: 'right', size: 2, gridsTaken: [],
+            initial: true, initialPosition: { x: right, y: 0 }
+        },
     ]
 
     boats: Boat[] = this.initialBoats;
@@ -138,18 +152,32 @@ export default class BombGameStore {
     }
 
     triggerBomb(): void {
-        this.bomb('primary', this.tempBombs.primaryIndex!);
-        this.bomb('secondary', this.tempBombs.secondaryIndex!);
+        const primarySuccess = this.bomb('primary', this.tempBombs.primaryIndex!);
+        const secondarySuccess = this.bomb('secondary', this.tempBombs.secondaryIndex!);
+        const gameMatch = (
+            this.dashboard.primaryBoats.filter(x => x.status === 'crashed').length > 2 ||
+            this.dashboard.primaryBoats.filter(x => x.status === 'crashed').length > 2
+        );
 
-        this.tempBombs = {};
+        if ((primarySuccess || secondarySuccess) && !gameMatch) {
+            // show congras
+            store.playerStore.toggleWinnerWithoutLoop();
+        }
 
-        if (this.dashboard.primaryBoats.filter(x => x.status === 'crashed').length > 2 ||
-            this.dashboard.primaryBoats.filter(x => x.status === 'crashed').length > 2) {
+        if (gameMatch) {
             store.playerStore.toggleWinner();
         }
+
+        this.tempBombs = {};        
     }
 
-    bomb(player: player, index: number): void {
+    /**
+     * 
+     * @param player 
+     * @param index 
+     * @returns true if any boat is crashed within this attack
+     */
+    bomb(player: player, index: number): boolean {
 
         // set bomb
         const target: Bomb = this.getTargetBomb(player, index);
@@ -163,7 +191,7 @@ export default class BombGameStore {
         // check any boat is crashed
         const newlyCrashedBoatIndex = this.checkAnyBoatCrashed(player);
         if (newlyCrashedBoatIndex === -1) {
-            return;
+            return false;
         }
 
         const targetBoat: Boat = this.getTargetBoat(player, newlyCrashedBoatIndex);
@@ -186,8 +214,7 @@ export default class BombGameStore {
             this.updateBomb(player, gridIndex, targetBomb);
         }
 
-        // show congras
-        store.playerStore.toggleWinnerWithoutLoop();
+        return true;
     }
 
     updateBoat(player: player, index: number, boat: Boat) {
@@ -305,7 +332,7 @@ export default class BombGameStore {
         })
 
         targetBoat.gridsTaken = [];
-        // targetBoat.position = targetBoat.initialPosition;
+        targetBoat.position = targetBoat.initialPosition;
         targetBoat.initial = true;
         this.boats[index] = targetBoat;
     }

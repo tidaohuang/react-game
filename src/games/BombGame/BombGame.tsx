@@ -11,10 +11,6 @@ export function allowDrop(ev: React.DragEvent<HTMLDivElement>): void {
 
 
 export default observer(function BombGame() {
-
-
-    
-
     const { bombStore } = useStore();
 
     if (bombStore.currentPlayer === 'bomb') {
@@ -27,16 +23,22 @@ export default observer(function BombGame() {
     return (
         <div className={`container bomb ${bombStore.currentPlayer}`}>
 
-            <Information images={[ "games/bomb/1.JPG",
+            <Information images={["games/bomb/1.JPG",
                 "games/bomb/2.JPG",
                 "games/bomb/3.JPG",
                 "games/bomb/4.JPG",
                 "games/bomb/5.JPG"
-            ]}/>
+            ]} />
 
             <div className="ship-container">
                 {bombStore.boats.map((boat: Boat, index: number) => (
-                    <DraggableBoat key={index} id={index} boat={boat} />
+                    <DraggableBoat
+                        key={index} id={index} boat={boat}
+                        // rotateBoat={bombStore.rotateBoat}
+                        // setToDefaultPosition={bombStore.setToDefaultPosition}
+                        // drop={bombStore.drop}
+                        // handleDragStart={bombStore.handleDragStart}
+                    />
                 ))}
 
                 {/* <div id='yellowDot' className="dot" style={{backgroundColor: 'yellow', zIndex: 1000, position: 'absolute'}}></div>

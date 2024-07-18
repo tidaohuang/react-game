@@ -92,15 +92,11 @@ export default observer(function HomePage() {
     }
 
     useEffect(() => {
-        console.log('use effect called ...');
         document.addEventListener("keydown", homePageKeyDownHandler);
 
         return () => {
-            console.log('use effect cleaned !');
             document.removeEventListener("keydown", homePageKeyDownHandler);
         }
-
-
     }, [homeStore.gameIndexes]);
 
 
