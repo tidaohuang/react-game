@@ -19,7 +19,9 @@ export default class HomeStore {
         makeAutoObservable(this);
 
         for (let i = 0; i < this.games.length; i++) {
-            this.gameIndexes.push(i);
+            if (i < 5) {
+                this.gameIndexes.push(i);
+            }
         }
     }
 

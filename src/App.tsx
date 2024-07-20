@@ -10,6 +10,7 @@ import FiveSecondsGame from "./games/FiveSecondsGame/FiveSecondsGame";
 import BombGame from "./games/BombGame/BombGame";
 import HeartConnectGame from "./games/HeartConnectGame/HeartConnectGame";
 import { PAGE } from "./constants/Pages";
+import StickerGame from "./games/StickerGame/StickerGame";
 
 function App() {
 	const parsed = queryString.parse(window.location.search);
@@ -26,6 +27,8 @@ function App() {
 		content.push(<BombGame key={PAGE.Bomb} />)
 	} else if (game === PAGE.HeartConnect) {
 		content.push(<HeartConnectGame key={PAGE.HeartConnect} />)
+	} else if (game === PAGE.Sticker) {
+		content.push(<StickerGame key={PAGE.Sticker} />)
 	}
 	// else if (game === PAGE.Test) {
 	// 	content.push(<TestGame key={PAGE.FiveSeconds} />)

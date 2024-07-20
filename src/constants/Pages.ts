@@ -7,5 +7,6 @@ export enum PAGE {
     FiveSeconds = 'five-seconds',
     Bomb = 'bomb',
     HeartConnect = 'heart-connect',
+    Sticker = 'sticker',
     Test = 'test'
 }

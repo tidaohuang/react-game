@@ -55,6 +55,16 @@ export const games: GameCard[] = [
         complexity: 2
     },
     {
+        name: '模仿大賽',
+        img: undefined,
+        tag: 'dev',
+        page: PAGE.Sticker,
+        playerNumber: 2,
+        time: '5-10 mins',
+        category: '默契類',
+        complexity: 2
+    },
+    {
         name: '步步為營',
         img: undefined,
         tag: 'dev',

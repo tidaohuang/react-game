@@ -1,0 +1,78 @@
+.container.sticker-game {
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sticker-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sticker-wrapper .sticker {
+    /* height: 42vh; */
+    width: 40rem; 
+    height: 40rem;
+    background-color: #fff;
+    border-radius: 2rem;
+
+    margin: 10px;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.sticker .image {
+    background-color: #fff;
+}
+
+.sticker .image img {
+    height: 35vh;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-repeat: no-repeat;
+}
+
+.sticker .number {
+    height: 7vh;
+    width: 100%;
+    background-color: var(--primary);
+
+    position: absolute;
+    bottom: 0;
+
+
+    display: grid;
+    place-items: center;
+    
+    color: #fff;
+    font-size: 5rem;
+    font-weight: 600;
+}
+
+.sticker-next-btn {
+    margin-top: 2rem;
+    width: 20rem;
+    height: 10rem;
+    background-color: var(--primary);
+    border-radius: 2rem;
+    border: .5rem solid var(--primary);
+
+    padding: auto;
+    text-align: center;
+    color: #fff;
+    font-size: 5rem;
+    font-weight: 600;
+
+
+    display: grid;
+    place-items: center;
+}
+
+.sticker-next-btn:hover{
+    background-color: #fff;
+    color: var(--primary);
+    cursor: pointer;
+}
