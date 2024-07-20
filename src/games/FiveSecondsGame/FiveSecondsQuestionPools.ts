@@ -99,12 +99,3 @@ export const questionPools: string[] = [
     "請列出3種飲料甜度",
     "請列出3種塑膠製品",
 ];
-
-// // declare the function 
-// export const shuffle = (array: string[]) => {
-//     for (let i = array.length - 1; i > 0; i--) {
-//         const j = Math.floor(Math.random() * (i + 1));
-//         [array[i], array[j]] = [array[j], array[i]];
-//     }
-//     return array;
-// }; 
