@@ -1,34 +1,20 @@
-import { useEffect, useState } from "react";
-import Information from "../../components/Information";
+import queryString from "query-string";
+import StickerGamePlayer from "./StickerGamePlayer";
+import StickerGameLeader from "./StickerGameLeader";
 import '../../styles/style-sticker.css';
-import Sticker from "./Sticker";
-import { shuffleV1 } from "../../utils/commonFunction";
+import Information from "../../components/Information";
 
 export default function StickerGame() {
 
-    const [stickerIndex, setStickerIndex] = useState<number>(1);
-    const [images, setImages] = useState(['1', '2', '3', '4'])
-    useEffect(() => {
-        setImages(shuffleV1(images));
-    }, [stickerIndex])
 
-    const stickers = []
-    for (let i = 0; i < images.length; i++) {
+    const parsed = queryString.parse(window.location.search);
 
-        if (stickerIndex === 9 && images[i] === '3') {
-            stickers.push(<Sticker key={i}
-                number={i + 1}
-                img={`games/sticker/question/${stickerIndex}/${images[i]}-x.png`}
-            />)
-        }
-        else {
-            stickers.push(<Sticker key={i}
-                number={i + 1}
-                img={`games/sticker/question/${stickerIndex}/${images[i]}.png`}
-            />)
-        }
+    if (parsed.mode && parsed.mode === 'player') {
+        return <StickerGamePlayer />
+    }
 
-
+    if (parsed.mode && parsed.mode === 'leader') {
+        return <StickerGameLeader />
     }
 
     return (
@@ -39,28 +25,19 @@ export default function StickerGame() {
                 "games/fiveSeconds/2.JPG",
             ]} />
 
-            <div className="sticker-wrapper">
-                {/* <Sticker number={1} img={`games/sticker/question/${stickerIndex}/1.png`} />
-                <Sticker number={2} img={`games/sticker/question/${stickerIndex}/2.png`} />
-                <Sticker number={3} img={`games/sticker/question/${stickerIndex}/3.png`} />
-                <Sticker number={4} img={`games/sticker/question/${stickerIndex}/4.png`} /> */}
-                {stickers}
+            <div className="sticker-btn-wrapper">
+                <div className="sticker-next-btn" onClick={() => {
+                    window.open('/react-game/?g=sticker&mode=player', "_blank");
+                }}>
+                    <span>Player</span>
+                </div>
+                <div className="sticker-next-btn" onClick={() => {
+                    window.open('/react-game/?g=sticker&mode=leader', "_blank");
+                }}>
+                    <span>Leader</span>
+                </div>
             </div>
 
-            {stickerIndex < 11 &&
-                <div className="sticker-next-btn" onClick={() => {
-                    setStickerIndex(stickerIndex + 1)
-                    setImages(shuffleV1(images));
-                }}>
-                    <span>下一題</span>
-                </div>
-            }
-
-            {stickerIndex === 11 &&
-                <div className="sticker-next-btn">
-                    <span>End</span>
-                </div>
-            }
         </div>
     )
 }

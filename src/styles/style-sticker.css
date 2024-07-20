@@ -76,3 +76,14 @@
     color: var(--primary);
     cursor: pointer;
 }
+
+/* game page */
+.sticker-btn-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.sticker-btn-wrapper .sticker-next-btn {
+    width: 30rem;
+    margin: .5rem;
+}
