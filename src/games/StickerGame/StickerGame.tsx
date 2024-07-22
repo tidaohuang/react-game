@@ -1,8 +1,8 @@
 import queryString from "query-string";
 import StickerGamePlayer from "./StickerGamePlayer";
 import StickerGameLeader from "./StickerGameLeader";
-import '../../styles/style-sticker.css';
 import Information from "../../components/Information";
+import './style-sticker.css';
 
 export default function StickerGame() {
 

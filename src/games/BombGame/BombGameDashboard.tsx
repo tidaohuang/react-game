@@ -11,6 +11,9 @@ export default observer(function BombGameDashboard() {
     return (
         <div className="container bomb-dashboard">
             <div className="dashboard">
+
+
+
                 <div className="grid-container primary">
                     {bombStore.dashboard.attackPrimaryBombs.map((b, index) => (
                         <BombGameGrid key={index} bomb={b} player="primary" />
@@ -22,6 +25,8 @@ export default observer(function BombGameDashboard() {
                         <BombGameGrid key={index} bomb={b} player="secondary" />
                     ))}
                 </div>
+
+
 
                 {bombStore.tempBombs.primaryIndex != undefined && bombStore.tempBombs.secondaryIndex != undefined &&
                     <div className="bomb-trigger-btn" onClick={() => bombStore.triggerBomb()}>

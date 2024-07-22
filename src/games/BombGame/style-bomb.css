@@ -71,6 +71,15 @@
     text-align: center;
 }
 
+
+.grid-container.primary {
+    border: 1rem solid var(--secondary);
+}
+
+.grid-container.secondary {
+    border: 1rem solid var(--primary);
+}
+
 .container.bomb.primary .grid-item.active {
     background-color: var(--primary);
 }

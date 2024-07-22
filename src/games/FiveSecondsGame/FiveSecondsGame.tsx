@@ -3,6 +3,7 @@ import { useStore } from "../../stores/store";
 import FiveSecondsCounter from "./FiveSecondsCounter";
 import { useEffect, useState } from "react";
 import Information from "../../components/Information";
+import './style-5seconds.css';
 
 
 export default observer(function FiveSecondsGame() {

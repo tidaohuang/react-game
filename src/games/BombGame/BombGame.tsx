@@ -4,6 +4,7 @@ import { Boat } from "./BombGameStore";
 import DraggableBoat from "./DraggableBoat";
 import BombGameDashboard from "./BombGameDashboard";
 import Information from "../../components/Information";
+import './style-bomb.css';
 
 export function allowDrop(ev: React.DragEvent<HTMLDivElement>): void {
     ev.preventDefault();

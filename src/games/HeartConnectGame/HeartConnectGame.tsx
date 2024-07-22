@@ -7,6 +7,7 @@ import Information from "../../components/Information";
 import { MyAlert } from "../../components/MyAlert";
 import { useNavigate } from "react-router-dom";
 import queryString from "query-string";
+import './style-heart-connection.css';
 
 
 export default observer(function HeartConnectGame() {

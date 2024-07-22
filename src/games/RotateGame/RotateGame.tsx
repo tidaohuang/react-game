@@ -3,7 +3,7 @@ import { useStore } from "../../stores/store";
 import RotateGrid from "./RotateGrid";
 import { MyAlert } from "../../components/MyAlert";
 import Information from "../../components/Information";
-
+import './style-rotate-game.css';
 
 export default observer(function RotateGame() {
 
