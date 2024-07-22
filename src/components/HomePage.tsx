@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { store, useStore } from "../stores/store"
 import { KeyboardEventKey } from "../constants/KeyboardEvent";
 import { observer } from "mobx-react-lite";
@@ -6,6 +6,13 @@ import { observer } from "mobx-react-lite";
 export default observer(function HomePage() {
 
     const { navbarStore, homeStore } = useStore();
+
+    // for mobile
+    const startX = useRef(0);
+    const startY = useRef(0);
+    const endX = useRef(0);
+    const endY = useRef(0);
+    const threshold = 50; // Minimum distance for a swipe to be registered
 
 
     const content = [];
@@ -91,11 +98,65 @@ export default observer(function HomePage() {
         )
     }
 
+    const handleTouchStart = (e: any) => {
+        startX.current = e.touches[0].clientX;
+        startY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: any) => {
+        endX.current = e.touches[0].clientX;
+        endY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = () => {
+        const deltaX = endX.current - startX.current;
+        const deltaY = endY.current - startY.current;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            // Horizontal swipe
+            if (Math.abs(deltaX) > threshold) {
+                if (deltaX > 0) {
+                    handleSwipeRight();
+                } else {
+                    handleSwipeLeft();
+                }
+            }
+        }
+
+        // Reset values
+        startX.current = 0;
+        startY.current = 0;
+        endX.current = 0;
+        endY.current = 0;
+    };
+
+    const handleSwipeLeft = () => {
+        store.homeStore.handlePrevious();
+    };
+
+    const handleSwipeRight = () => {
+        store.homeStore.handleNext();
+    };
+
     useEffect(() => {
+
+        // for mobile swiping
+        const slideShowElement = document.getElementById('all-games');
+        slideShowElement?.addEventListener('touchstart', handleTouchStart);
+        slideShowElement?.addEventListener('touchmove', handleTouchMove);
+        slideShowElement?.addEventListener('touchend', handleTouchEnd);
+
+
+
         document.addEventListener("keydown", homePageKeyDownHandler);
 
         return () => {
             document.removeEventListener("keydown", homePageKeyDownHandler);
+
+            // for mobile
+            slideShowElement?.removeEventListener('touchstart', handleTouchStart);
+            slideShowElement?.removeEventListener('touchmove', handleTouchMove);
+            slideShowElement?.removeEventListener('touchend', handleTouchEnd);
         }
     }, [homeStore.gameIndexes]);
 
@@ -103,7 +164,7 @@ export default observer(function HomePage() {
 
     return (
         <div className="container home">
-            <div className="game-card-wrapper">
+            <div className="game-card-wrapper" id="all-games">
                 {content}
             </div>
         </div>
