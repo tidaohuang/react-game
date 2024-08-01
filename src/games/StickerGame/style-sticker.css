@@ -1,3 +1,9 @@
+.game-card-logo.sticker-logo {
+    position: absolute;
+    width: 45%;
+}
+
+
 .container.sticker-game {
     /* background-color: red; */
     display: flex;
@@ -12,7 +18,7 @@
 
 .sticker-wrapper .sticker {
     /* height: 42vh; */
-    width: 40rem; 
+    width: 40rem;
     height: 40rem;
     background-color: #fff;
     border-radius: 2rem;
@@ -46,7 +52,7 @@
 
     display: grid;
     place-items: center;
-    
+
     color: #fff;
     font-size: 5rem;
     font-weight: 600;
@@ -71,7 +77,7 @@
     place-items: center;
 }
 
-.sticker-next-btn:hover{
+.sticker-next-btn:hover {
     background-color: #fff;
     color: var(--primary);
     cursor: pointer;

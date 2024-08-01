@@ -56,8 +56,8 @@ export const games: GameCard[] = [
     },
     {
         name: '模仿大賽',
-        img: undefined,
-        tag: 'dev',
+        img: 'sticker-game-logo.svg',
+        tag: 'green',
         page: PAGE.Sticker,
         playerNumber: 2,
         time: '5-10 mins',
