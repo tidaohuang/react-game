@@ -18,10 +18,10 @@ export default observer(function HeartConnectBoard(props: Props) {
                 <div className="heart-pie" style={{ transform: `rotate(${heartConnectStore.model.pieDegree}deg)` }}>
                 </div>
 
-                {props.mode === 'player' &&
+                {/* {props.mode === 'player' &&
                     <div className={`heart-shield bottom ${heartConnectStore.model.showingPie ? 'rotate' : ''}`}>
                     </div>
-                }
+                } */}
                 {props.mode === 'leader' &&
                     <div className="heart-shield bottom rotate">
                     </div>
